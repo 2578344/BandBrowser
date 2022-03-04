@@ -1,5 +1,8 @@
+/********************TAG SELECTORS************************/
+
+/********************CLASS SELECTORS************************/
 .top-container {
-    display: inline-block;
+    /*display: inline-block; */
     background-color: #7882a4;
     width: 100%;
     margin-bottom: 10px;
@@ -16,3 +19,32 @@
     height: 500px;
     background-color: grey;
 }
+
+.web-title {
+    display: inline-block;
+}
+
+.button-account {
+    margin-left: 550px;
+    font-size: 16px;
+    border-style: groove;
+    border-width: 2px;
+    
+    
+}
+
+.button-top {
+    border-style: groove;
+    border-width: 2px;
+}
+
+.filter {
+    display: inline-block;
+}
+
+.search-input{
+    margin-left: 350px;
+}
+
+
+/********************ID SELECTORS************************/

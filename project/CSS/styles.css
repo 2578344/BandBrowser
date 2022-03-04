@@ -156,6 +156,18 @@ button:active{
     right: 220px;
 }
 
+#filter3 {
+    position:absolute;
+    display: inline-block;
+    
+    border: solid 1px;
+    font-size: 1em;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    right: 380px;
+}
+
 #top-but {
     position: absolute;
     top: 70px;

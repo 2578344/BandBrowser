@@ -8,15 +8,31 @@
 
 <body>
     <div class="top-container">
-        <h1 class="web-title">BandBrowser</h1><button class="button-account">My account </button>
-        <button class="button-top">Homepage</button><button class="button-top">My band</button>
-        
+        <div class="left">
+            <h1>BandBrowser</h1>
+            <button>Homepage</button><button>My Band</button>
+            
+        </div>
+        <div class="right">
+            <button>My account</button>
+        </div>
     </div>
     <div class="middle-container">
-        <input type="text" class="filter">
-        <input type="radio">
+        <select name="filter1" id="filter1">
+            <option value="0">Most recent</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        <div class="left" style="display:inline-block">
+            <input type="radio"><br>
+            <input type="radio">
+            
+            
+        </div>
+        
         <input type="text" class="search-input" placeholder="Search"><br>
-        <input type="radio" style="margin-left: 179.8px;">
+        
 
         
 
@@ -25,6 +41,7 @@
     <div class="bottom-container">
         
     </div>
+    <button class="create-post-btn">Create Post</button>
 </body>
 
 </html>

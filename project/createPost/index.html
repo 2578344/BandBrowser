@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BandBrowser | Create a Post</title>
+    <link rel="stylesheet" href="./CSS/style.css">
+</head>
+<body>
+    <div class="top-container">
+        <div class="left">
+            <h1>Create Post</h1>
+            <button>Return Home</button>
+        </div>
+        <div class="right">
+            <button>My account</button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="tabs">
+            <button id="lfb">Looking for Band</button>
+            <button id="lfm">Looking for Member</button>
+        </div>
+        <div class="form-container">
+            <div class="left">
+                <input name="title" type="text" placeholder="Title">
+                <input name="location" type="text" placeholder="Location">
+                <textarea name="description" id="description" placeholder="Description" cols="30" rows="10"></textarea>
+            </div>
+
+            <div class="right">
+                <select name="commitment" id="commitment">
+                    <option value="0">Commitment</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+
+                  <select name="genre" id="genre">
+                    <option value="0">Genre</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+
+                  <select name="experience" id="experience">
+                    <option value="0">Experience</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+
+                  <div class="expiresIn">
+                      <div class="expires-left">
+                          <div class="label">Expire post in</div>
+                      </div>
+
+                      <div class="expires-right">
+                          <input type="number" id="expiresIn" name="expiresIn" step="1" min="1" max="15">
+                          <div class="text">days</div>
+                      </div>
+                  </div>
+
+                  <button id="submit-button" type="submit">Create Post</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

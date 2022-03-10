@@ -22,22 +22,54 @@
   <div class="left-container">
     <div class="Topleft-container">
       <div class="photo-container">
+        <div class="photo-box">
 
+        </div>
+        <button id="ChangeProfileImage">Change Profile Image</button>
       </div>
       <div class="info-container">
-
+        <input name="First name" type="text" placeholder="First Name">
+        <input name="Last name" type="text" placeholder="Last Name">
+        <input type="date" name="DOB" value="2022-01-01" min="1900-01-01" max="2022-01-01">
+        <input name="Email" type="text" placeholder="Email">
       </div>
     </div>
     <div class="Bottomleft-container">
-
+      <h2 class="Social-Header">Linked Accounts</h2>
+      <div class="Social-Container">
+        <input class="Social-form" name="Spotify" type="text" placeholder="Spotify">
+        <button id="SpotifyChange">Change</button>
+      </div>
+      <div class="Social-Container">
+        <input class="Social-form" name="SoundCloud" type="text" placeholder="SoundCloud">
+        <button id="SoundCloudChange">Change</button>
+      </div>
+      <div class="Social-Container">
+        <input class="Social-form" name="Facebook" type="text" placeholder="Facebook">
+        <button id="FacebookChange">Change</button>
+      </div>
     </div>
   </div>
   <div class="right-container">
     <div class="instruments-container">
+      <select class="instruments-Form" name="Main-Instrument" id="Main-Instrument">
+        <option value="0">Main Instrument</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+      <select class="instruments-Form" name="second-Instrument" id="second-Instrument">
+        <option value="0">(Optional) second Instrument</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
 
+      <textarea class="bio" name="description" id="description" placeholder="Description" cols="30" rows="10"></textarea>
     </div>
     <div class="buttons-container">
-        <button style = "border-color: black; background-color: #FF0000; color: white">Delete Account</button>
+        <button id="deleteButton" style = "border-color: black; background-color: #FF0000; color: white" onMouseOver="this.style.background='#CC0000'"
+                onMouseOut="this.style.background='#FF0000'">Delete Account</button>
           &nbsp;
         <button>Save Changes</button>
     </div>

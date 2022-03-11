@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BandBrowser | Create a Post</title>
+    <link rel="stylesheet" href="createPost/CSS/style.css">
+    <!-- Script -->
+    <script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js'></script>
+    <script src='script.js' type="text/javascript"></script>
+</head>
+<body>
+    <div class="top-container">
+        <div class="left">
+            <h1>Create a new Band</h1>
+            <button onClick="location.href='myBandPage.html'">Return to my Bands</button>
+        </div>
+        <div class="right">
+            <button>Logout</button>
+        </div>
+    </div>
+
+    <div class="main-container">
+
+        <div class="form-container">
+            <div class="left">
+                <input name="band-name" type="text" placeholder="Band Name">
+                <input name="location" type="text" placeholder="Location">
+              
+<select name="genre" id="genre">
+                    <option value="0">Genre</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+              
+ <select name="genre" id="genre">
+                    <option value="0">Level of Commitment</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+
+            </div>
+
+            <div class="right">
+                
+
+                  
+
+                  
+
+                  
+                <textarea name="description" id="description" placeholder="Description" cols="30" rows="10"></textarea>
+                  <button id="submit-button" type="submit">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,202 @@
+/********************TAG SELECTORS************************/
+*, html, body {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-transition: ease .2s;
+    transition: ease .2s;
+  }
+
+  button{
+    background-color: rgb(220, 220, 220);
+    border: solid 1px;
+    font-size: 1em;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover{
+    background-color: rgb(200, 200, 200);
+}
+button:active{
+    background-color: rgb(180, 180, 180);
+}
+/********************CLASS SELECTORS************************/
+.top-container {
+    position:relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    background-color: #7882a4;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    padding: 15px 25px 35px 25px;
+    margin-bottom: 10px;
+  }
+  
+  .top-container .right {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  
+  .top-container .left {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: inline-block;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    gap: 10px;
+  }
+  
+  .top-container .left button {
+    padding: 0;
+  }
+
+.middle-container {
+    position:relative;
+    display: inline-block;
+    background-color: #cfcfcf;
+    width: 80%;
+    border: solid;
+    border-width: 1.5px;
+    margin-bottom: 10px;
+    margin-left: 10%;
+    margin-right: 10%;
+    padding-bottom: 5px;
+    
+    
+}
+
+.bottom-container {
+    
+    width: 80%;
+    height: 500px;
+    border: solid;
+    border-width: 1.5px;
+    margin-left: 10%;
+    margin-right: 10%;
+    overflow: scroll; /* Show scrollbars */
+}
+
+.test-div {
+    
+    width: 100%;
+    height: 100px;
+    background-color: rgb(116, 126, 116);
+    margin-bottom: 5px;
+}
+
+.web-title {
+    display: inline-block;
+}
+
+.button-account {
+    margin-left: 550px;
+    font-size: 16px;
+    border-style: groove;
+    border-width: 2px;
+    
+    
+}
+
+.button-top {
+    border-style: groove;
+    border-width: 2px;
+}
+
+.filter {
+    display: inline-block;
+}
+
+.search-input{
+    position: absolute;
+    display: inline-block;
+   
+    border: solid 1px;
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    right: -1px;
+    
+}
+
+.create-post-btn{
+    margin-top: 10px;
+    margin-left: 80%;
+}
+
+.radio-btn{
+    
+    margin-left: 1350%;
+}
+
+
+/********************ID SELECTORS************************/
+#filter1 {
+    position:absolute;
+    display: inline-block;
+    margin-left: 20px;
+    border: solid 1px;
+    font-size: 1em;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#filter2 {
+    position:absolute;
+    display: inline-block;
+    
+    border: solid 1px;
+    font-size: 1em;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    right: 220px;
+}
+
+#filter3 {
+    position:absolute;
+    display: inline-block;
+    
+    border: solid 1px;
+    font-size: 1em;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    right: 380px;
+}
+
+#top-but {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    padding: 2.5px 10px;
+}
+
+#top-but2 {
+    position: absolute;
+    top: 70px;
+    left: 100px;
+    padding: 2.5px 15px;
+}
+
+#musicians-p {
+    position: absolute;
+    left: 190px;
+}
+#musicians-p2 {
+    position: absolute;
+    left: 190px;
+    top: 20px;
+}

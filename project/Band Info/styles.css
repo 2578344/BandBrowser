@@ -1,0 +1,357 @@
+/********************TAG SELECTORS************************/
+*, html, body {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-transition: ease .2s;
+    transition: ease .2s;
+  }
+
+  h1,h2{
+    color: #ffffff
+  }
+  button{
+    background-color: rgb(220, 220, 220);
+    border: solid 1px;
+    font-size: 1em;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover{
+    background-color: rgb(200, 200, 200);
+}
+button:active{
+    background-color: rgb(180, 180, 180);
+}
+.deleteButton:hover{
+    background-color: rgb(0, 180, 180);
+}
+button:hover{
+    background-color: rgb(200, 200, 200);
+}
+
+/********************CLASS SELECTORS************************/
+.top-container {
+    position:relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    background-color: #7882a4;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    padding: 15px 25px 35px 25px;
+    margin-bottom: 10px;
+  }
+
+  .top-container .right {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+
+  .top-container .left {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: inline-block;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    gap: 10px;
+  }
+
+  .top-container .left button {
+    padding: 0;
+  }
+
+.main-container {
+    position:relative;
+    display: flex;
+    width: 95%;
+    height: 500px;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    margin-bottom: 1%;
+}
+.left-container {
+    position:relative;
+    display: inline-block;
+    width: 54%;
+    margin-right: 1%;
+}
+.Topleft-container {
+    position:relative;
+    display: flex;
+    width: 100%;
+    height: 59%;
+    border: solid;
+    border-width: 1.5px;
+    margin-right: 1%;
+    margin-bottom: 1%;
+    background-color: #858585;
+}
+.general-container {
+    display: relative;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    width: 50%;
+    height: 100%;
+    margin-right: 1%;
+}
+
+.general-Form{
+    width: 90%;
+    height: 15%;
+    margin-right: 5%;
+    margin-left: 5%;
+    margin-top: 5%;
+    }
+.general-label{
+    width: 90%;
+    height: 15%;
+    margin-left: 0%;
+    margin-top: 5%;
+    font-size: 2em;
+    text-align: left;
+    margin-left: 5%;
+}
+
+.info-container {
+    position:relative;
+    display: inline-block;
+    width: 50%;
+    height: 100%;
+    margin-right: 1%;
+    position:relative;
+    display: inline-block;
+    background-color: #858585;
+    margin: auto;
+    text-align: center;
+}
+.bio{
+    position:relative;
+    display: inline-block;
+    width: 75%;
+    height: 55%;
+    margin-top: 5%;
+}
+
+.location{
+    position:relative;
+    display: inline-block;
+    width: 75%;
+    height: 15%;
+    margin-top: 5%;
+}
+
+
+.Bottomleft-container {
+    position:flex;
+    display: inline-block;
+    width: 100%;
+    height: 50%;
+    border: solid;
+    border-width: 1.5px;
+    margin-right: 1%;
+    background-color: #858585;
+}
+
+.currentMembers{
+    position:flex;
+    margin-left: 2.5%;
+    margin-top: 1.25%;
+
+}
+.currentMembers-Container{
+    position:flex;
+    margin-left: 2.5%;
+    margin-top: 1.25%;
+    border: solid;
+    border-width: 1.5px;
+    width: 90%;
+    height: 50px;
+    background-color: #ffffff;
+}
+.currentMemberLink{
+    position:flex;
+    margin-left: 2.5%;
+    margin-top: 1.25%;
+    float: left;
+    font-size: 1.5em;
+}
+.currentMemberDelete{
+    position:flex;
+    margin-left: 2.5%;
+    margin-top: 1.25%;
+    font-size: 1.5em;
+    float: right;
+    margin-right: 2.5%;
+}
+
+.right-container {
+    position:relative;
+    display: inline-block;
+    width: 45%;
+}
+
+.currentRequests-container {
+    position:relative;
+    display: inline-block;
+    width: 100%;
+    height: 80%;
+    border: solid;
+    border-width: 1.5px;
+    margin-right: 1%;
+    background-color: #858585;
+    margin: auto;
+    text-align: center;
+}
+
+.currentRequest-Container{
+    position:flex;
+    margin-left: 2.5%;
+    margin-top: 1.25%;
+    border: solid;
+    border-width: 1.5px;
+    width: 90%;
+    height: 50px;
+    background-color: #ffffff;
+}
+
+.currentRequestAccountLink{
+    position:flex;
+    margin-left: 2.5%;
+    margin-top: 1.25%;
+    float: left;
+    font-size: 1.5em;
+}
+.currentRequestButton{
+    position:flex;
+    margin-right: 2.5%;
+    margin-top: 0.5%;
+    float: right;
+
+
+
+}
+
+
+.buttons-container {
+    text-align: center;
+    position:flex;
+    display: inline-block;
+    width: 100%;
+    height: 20%;
+    padding-top: 3%;
+    margin-right: 1%;
+}
+
+.Delete Account {
+ margin-right:20px;
+ background-color: #FF0000;
+ color: white;
+}
+
+
+
+.web-title {
+    display: inline-block;
+}
+
+.button-account {
+    margin-left: 550px;
+    font-size: 16px;
+    border-style: groove;
+    border-width: 2px;
+}
+
+.button-top {
+    border-style: groove;
+    border-width: 2px;
+}
+
+.filter {
+    display: inline-block;
+}
+
+.search-input{
+    position: absolute;
+    display: inline-block;
+
+    border: solid 1px;
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    right: -1px;
+
+}
+
+.create-post-btn{
+    margin-top: 10px;
+    margin-left: 80%;
+}
+
+.radio-btn{
+
+    margin-left: 1350%;
+}
+
+
+/********************ID SELECTORS************************/
+#filter1 {
+    position:absolute;
+    display: inline-block;
+    margin-left: 20px;
+    border: solid 1px;
+    font-size: 1em;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#filter2 {
+    position:absolute;
+    display: inline-block;
+
+    border: solid 1px;
+    font-size: 1em;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    right: 220px;
+}
+
+#filter3 {
+    position:absolute;
+    display: inline-block;
+
+    border: solid 1px;
+    font-size: 1em;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    right: 380px;
+}
+
+#top-but {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    padding: 2.5px 10px;
+}
+
+#top-but2 {
+    position: absolute;
+    top: 70px;
+    left: 100px;
+    padding: 2.5px 15px;
+}

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
   <title>Project</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="{% static 'Account/styles.css' %}">
 </head>
 
 <body>
@@ -14,8 +15,8 @@
   <div class="right">
     <button>Logout</button>
   </div>
-  <button id="top-but" onClick="location.href='index.html'">Homepage</button>
-  <button id="top-but2" >My Band</button>
+  <button id="top-but"><a href="{% url 'BandBrowser:index' %}">Homepage</a></button>
+  <button id="top-but2" ><a href="{% url 'BandBrowser:myBandPage' %}">My Band</a></button>
 </div>
 
 <div class="main-container">

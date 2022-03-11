@@ -1,22 +1,23 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BandBrowser | Create a Post</title>
-    <link rel="stylesheet" href="./CSS/style.css">
+    <link rel="stylesheet" href="{% static 'createPost/CSS/style.css' %}">
 </head>
 <body>
     <div class="top-container">
         <div class="left">
             <h1>Create Post</h1>
-            <a href="../">
+            <a href="{% url 'BandBrowser:index' %}">
                 <button>Return Home</button>
             </a>
         </div>
         <div class="right">
-            <a href="../Account/AccountPage.html">
+            <a href="{% url 'BandBrowser:accountPage' %}">
                 <button>My account</button>
             </a>
         </div>

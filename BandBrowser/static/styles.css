@@ -200,3 +200,9 @@ button:active{
     left: 190px;
     top: 20px;
 }
+
+#account-btn{
+    position: absolute;
+    left: auto;
+    background-color: aqua;
+}

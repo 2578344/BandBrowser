@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 
 <head>
     <title>Project</title>
-    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 
 <body>
@@ -13,9 +14,11 @@
             
         </div>
         <div class="right">
-            <button>My account</button>
+            <a href="{% url 'BandBrowser:accountPage' %}">
+                <button>My account</button>
+                </a>
         </div>
-        <button id="top-but" onClick="location.href='index.html'">Homepage</button><button id="top-but2" style="background-color:#92A9BD" >My Band</button>
+        <button id="top-but" ><a href="{% url 'BandBrowser:index' %}">Homepage</a></button><button id="top-but2" style="background-color:#92A9BD" >My Band</button>
     </div>
     
     <div class="middle-container" style="padding-bottom:24px">
@@ -54,7 +57,7 @@
         </div>
 
     </div>
-    <button class="create-post-btn" onClick="location.href='createBandPage.html'">Create A Band</button>
+    <button class="create-post-btn"><a href="{% url 'BandBrowser:createBandPage' %}">Create A Band</a></button>
 </body>
 
 </html>

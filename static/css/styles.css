@@ -7,7 +7,10 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     -webkit-transition: ease .2s;
     transition: ease .2s;
+    
   }
+
+  
 
   button{
     background-color: rgb(220, 220, 220);
@@ -200,3 +203,4 @@ button:active{
     left: 190px;
     top: 20px;
 }
+

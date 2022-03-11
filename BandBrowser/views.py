@@ -10,11 +10,11 @@ def createBandPage(request):
 def myBandPage(request):
     return render(request, 'BandBrowser/myBandPage.html')
 
-def index(request):
-    return render(request, 'BandBrowser/index.html')
+def createPostPage(request):
+    return render(request, 'BandBrowser/createPostPage.html')
 
-def index(request):
-    return render(request, 'BandBrowser/index.html')
+def accountPage(request):
+    return render(request, 'BandBrowser/AccountPage.html')
 
 def index(request):
     return render(request, 'BandBrowser/index.html')

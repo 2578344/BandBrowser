@@ -15,9 +15,11 @@
             
         </div>
         <div class="right">
+            <a href="{% url 'BandBrowser:accountPage' %}">
             <button>My account</button>
+            </a>
         </div>
-        <button id="top-but" style="background-color:#92A9BD">Homepage</button><button id="top-but2"onClick="location.href={% url 'BandBrowser:myBandPage' %}" >My Band</button>
+        <button id="top-but" style="background-color:#92A9BD">Homepage</button><button id="top-but2" ><a href="{% url 'BandBrowser:myBandPage' %}">My Band</a></button>
     </div>
     
     <div class="middle-container">
@@ -59,9 +61,9 @@
         <div class="test-div" >
         </div>
     </div>
-    <button class="create-post-btn" onClick="location.href='createPost/index.html'">Create Post</button>
+    <button class="create-post-btn"><a href="{% url 'BandBrowser:createPostPage' %}">Create Post</a></button>
 </body>
 <hr>
 <a href="LoginPage/login.html">login</a>
-
+<a href="{% url 'BandBrowser:myBandPage' %}">band</a></li>
 </html>

@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-{% load static %}
+{% load staticfiles %} 
 <html>
 
 <head>
@@ -47,23 +47,37 @@
 
         
     </div>
+
     <div class="bottom-container">
-        <div class="test-div">
-        </div>
-        <div class="test-div" >
-        </div>
-        <div class="test-div">
-        </div>
-        <div class="test-div" " >
-        </div>
-        <div class="test-div">
-        </div>
-        <div class="test-div" >
-        </div>
+        {% if post %}
+            {% for p in post %} 
+                <div class="test-div">
+                    <p>title: {{ p.title }} </p>
+                    <p>description: {{ p.description }}</p>
+                </div>
+            {% endfor %} 
+        {% else %} 
+            <p>No posts...</p>
+        {% endif %} 
+
+
+            
     </div>
     <button class="create-post-btn"><a href="{% url 'BandBrowser:createPostPage' %}">Create Post</a></button>
+    {% if post %}
+        {% for p in post %} 
+            <div class="test-div">
+                <p>title: {{ p.title }} </p>
+                <p>description: {{ p.description }}</p>
+            </div>
+        {% endfor %} 
+    {% else %} 
+        <p>No posts...</p>
+    {% endif %} 
+
 </body>
 <hr>
 <a href="LoginPage/login.html">login</a>
 <a href="{% url 'BandBrowser:myBandPage' %}">band</a></li>
+
 </html>

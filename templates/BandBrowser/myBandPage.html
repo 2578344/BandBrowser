@@ -49,15 +49,28 @@
         
     </div>
     <div class="bottom-container">
-        <div class="test-div">
-        </div>
-        <div class="test-div" >
-        </div>
-        <div class="test-div">
-        </div>
+        <!--  
+        {% if post %}
+            {% for p in post %} 
+                <div class="test-div">
+                    <p>title: {{ p.title }} </p>
+                    <p>description: {{ p.description }}</p>
+                </div>
+            {% endfor %} 
+        {% else %} 
+            <p>No posts...</p>
+        {% endif %} -->
 
     </div>
     <button class="create-post-btn"><a href="{% url 'BandBrowser:createBandPage' %}">Create A Band</a></button>
+    <!--  
+    {% if bands %} 
+        {% for b in bands %} 
+            {{ b.name }}
+        {% endfor %}
+    {% endif %}
+-->
+
 </body>
 
 </html>

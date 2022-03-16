@@ -1,3 +1,5 @@
 from django.contrib import admin
+from BandBrowser.models import Band, Post
 
-# Register your models here.
+admin.site.register(Band)
+admin.site.register(Post)

@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from BandBrowser.models import Post
 from BandBrowser.models import Band
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     post_list = Post.objects.all()
@@ -25,6 +26,7 @@ def myBandPage(request):
 def createPostPage(request):
     return render(request, 'BandBrowser/createPostPage.html')
 
+@login_required
 def accountPage(request):
     return render(request, 'BandBrowser/AccountPage.html')
 
@@ -39,3 +41,6 @@ def index(request):
 
 def index(request):
     return render(request, 'BandBrowser/index.html')
+
+def createAccountPage(request):
+    return render(request, 'BandBrowser/CreateAccount.html')

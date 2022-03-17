@@ -17,6 +17,9 @@
     border-radius: 5px;
     cursor: pointer;
 }
+title,h1,h2{
+    color: #ffffff
+  }
 button:hover{
     background-color: rgb(200, 200, 200);
 }

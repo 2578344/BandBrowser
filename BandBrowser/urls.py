@@ -9,5 +9,5 @@ urlpatterns = [
     path('createBandPage/',views.createBandPage, name='createBandPage'),
     path('createPostPage/',views.createPostPage, name='createPostPage'),
     path('accountPage/',views.accountPage, name='accountPage'),
-    
+    path('createAccountPage/',views.createAccountPage, name='createAccountPage'),
 ]

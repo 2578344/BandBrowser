@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+{% load bandBrowser_template_tags %}
+
+<html>
+
+    <head>
+        <title>BandBrowser</title>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    </head>
+
+    <div class="top-container">
+        <div class="left">
+            <h1 style="padding-bottom:10px; color: white">{% block title_block %}{% endblock %}</h1>
+        </div>
+            <div class="right">
+                {% if user.is_authenticated %}
+                <a href="{% url 'BandBrowser:accountPage' %}">
+                    <button>My account</button>
+                </a>
+                <div class="right">
+                    <button>Logout</button>
+                </div>
+                {% else %}
+                    <button>Sign in</button>
+                {% endif %}
+            </div>
+        <button id="top-but" ><a href="{% url 'BandBrowser:index' %}">Homepage</a></button>
+        <button id="top-but2" ><a href="{% url 'BandBrowser:myBandPage' %}">My Band</a></button>
+    </div>
+
+    <body>
+        <div>
+            {% block body_block %}
+            {% endblock %}
+        </div>
+    </body>
+
+</html>

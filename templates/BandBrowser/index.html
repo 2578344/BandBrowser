@@ -1,27 +1,11 @@
+{% extends 'BandBrowser/base.html' %}
+{% load staticfiles %}
 
-<!DOCTYPE html>
-{% load staticfiles %} 
-<html>
+{% block title_block %}
+BandBrowser
+{% endblock %}
 
-<head>
-    <title>Project</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-
-<body>
-    <div class="top-container">
-        <div class="left">
-            <h1 style="padding-bottom:10px">BandBrowser</h1>
-            
-        </div>
-        <div class="right">
-            <a href="{% url 'BandBrowser:accountPage' %}">
-            <button>My account</button>
-            </a>
-        </div>
-        <button id="top-but" style="background-color:#92A9BD">Homepage</button><button id="top-but2" ><a href="{% url 'BandBrowser:myBandPage' %}">My Band</a></button>
-    </div>
-    
+{% block body_block %}
     <div class="middle-container">
         <select name="filter1" id="filter1">
             <option value="0">Most recent</option>
@@ -75,9 +59,5 @@
         <p>No posts...</p>
     {% endif %} 
 
-</body>
-<hr>
-<a href="LoginPage/login.html">login</a>
-<a href="{% url 'BandBrowser:myBandPage' %}">band</a></li>
 
-</html>
+{% endblock %}

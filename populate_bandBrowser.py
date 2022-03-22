@@ -20,11 +20,11 @@ def populate():
     print("===================")
 
     usersRaw = [
-        {"username":"Alex","instruments":"Banjo","Bio":"Hi","numberOfBands":0,"numberOfPostsActive":0},
-        {"username":"John","instruments":"Guitar","Bio":"Hello","numberOfBands":0,"numberOfPostsActive":0},
-        {"username":"Tom","instruments":"Drums","Bio":"Howdy","numberOfBands":0,"numberOfPostsActive":0},
-        {"username":"Ian","instruments":"Vocals","Bio":"Hello there","numberOfBands":0,"numberOfPostsActive":0},
-        {"username":"Peter","instruments":"Bass","Bio":"Hi ya","numberOfBands":0,"numberOfPostsActive":0}
+        {"username":"Alex","password":"Example123?","instruments":"Banjo","Bio":"Hi","numberOfBands":0,"numberOfPostsActive":0},
+        {"username":"John","password":"Example123?","instruments":"Guitar","Bio":"Hello","numberOfBands":0,"numberOfPostsActive":0},
+        {"username":"Tom","password":"Example123?","instruments":"Drums","Bio":"Howdy","numberOfBands":0,"numberOfPostsActive":0},
+        {"username":"Ian","password":"Example123?","instruments":"Vocals","Bio":"Hello there","numberOfBands":0,"numberOfPostsActive":0},
+        {"username":"Peter","password":"Example123?","instruments":"Bass","Bio":"Hi ya","numberOfBands":0,"numberOfPostsActive":0}
     ]
 
     bandsRaw = [
@@ -42,7 +42,7 @@ def populate():
     #create User and UserProfile objects, link them together
     for user_data in usersRaw:
         if not User.objects.filter(username=user_data["username"]).exists():
-            user = add_User(user_data["username"])
+            user = add_User(user_data["username"],user_data["password"])
             user.save()
             add_UserProfile(user,user_data["instruments"],user_data["Bio"],user_data["numberOfBands"],user_data["numberOfPostsActive"])
 
@@ -78,7 +78,7 @@ def populate():
     attachUserToBandAsPotentialMember(userProfileInstances[4],bandInstances[0])# peter requests to join joy division
 
 #user functions
-def add_User(username,email=None, password=None):
+def add_User(username,password=None, email=None):
     user = User.objects.create_user(username, email, password)
     return user
 

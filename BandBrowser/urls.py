@@ -10,4 +10,7 @@ urlpatterns = [
     path('createPostPage/',views.createPostPage, name='createPostPage'),
     path('accountPage/',views.accountPage, name='accountPage'),
     path('createAccountPage/',views.createAccountPage, name='createAccountPage'),
+    path('loginPage/',views.loginPage, name='loginPage'),
+    path('login/',views.userLogin, name='login'),
+    path('logout/',views.logoutUser, name='logout'),
 ]

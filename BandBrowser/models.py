@@ -6,8 +6,6 @@ from django.contrib.auth.models import User
 class Post(models.Model):
     TITLE_MAX_LENGTH=128
     postID = models.CharField(max_length=11, unique=True)
-    #band = models.ForeignKey(Band, on_delete=models.CASCADE,default="")
-    #user = models.ForeignKey(User, on_delete=models.CASCADE,default="")
     description = models.CharField(max_length=1000)
     title = models.CharField(max_length=TITLE_MAX_LENGTH)
     publishDate = models.DateField(max_length=128)
@@ -33,7 +31,8 @@ class Band(models.Model):
     numberOfPostsActive = models.IntegerField(default=0)
     numberOfCurrentMembers = models.IntegerField(default=0)
     numberOfPotentialMembers = models.IntegerField(default=0)
-    userProfile = models.ManyToManyField(User)
+    currentMember = models.ManyToManyField(User,related_name='Current_Members')
+    potentialMember = models.ManyToManyField(User,related_name='Potential_Members')
     slug = models.SlugField(unique=True)
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -50,15 +49,9 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     band = models.ManyToManyField(Band)
     post = models.ManyToManyField(Post)
-    NAME_MAX_LENGTH=128
-    userID = models.CharField(max_length=10, unique=True)
-    firstName = models.CharField(max_length=NAME_MAX_LENGTH)
-    lastName = models.CharField(max_length=NAME_MAX_LENGTH)
-    email = models.CharField(max_length=100,unique=True)
-    dob = models.DateField()
-    instruments = models.TextField(null=True)
-    linkedAccounts = models.TextField(null=True)
-    bio = models.TextField(null=True)
+    instruments = models.TextField()
+    linkedAccounts = models.TextField()
+    bio = models.TextField()
     avatar = models.ImageField(upload_to='profile_images', blank=True)
     numberOfBands = models.IntegerField(default=0)
     numberOfPostsActive = models.IntegerField(default=0)

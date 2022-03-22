@@ -179,6 +179,8 @@
             post("FORM_POST_URL_HERE", data)
             .then(function(response){
                 console.log(response);
+                // REDIRECT TO HOME PAGE
+                window.location.href = "/"
             }).catch(function(error){
                alert(":( An error occurred");
             });

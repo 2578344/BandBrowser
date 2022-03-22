@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BandBrowser | Create a Post</title>
     <link rel="stylesheet" href="{% static 'createPost/CSS/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
     <div class="top-container">
@@ -25,7 +26,7 @@
 
     <div class="main-container">
         <div class="tabs">
-            <button id="lfb">Looking for Band</button>
+            <button id="lfb" class="active">Looking for Band</button>
             <button id="lfm">Looking for Member</button>
         </div>
         <div class="form-container">
@@ -72,5 +73,65 @@
             </div>
         </div>
     </div>
+
+    <script defer>
+        const bandFormHtml = `            
+        <div class="left">
+                <input name="title" type="text" placeholder="Title">
+                <input name="location" type="text" placeholder="Location">
+                <textarea name="description" id="description" placeholder="Description" cols="30" rows="10"></textarea>
+            </div>
+
+            <div class="right">
+                <select name="commitment" id="commitment">
+                    <option value="0">Commitment</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+
+                  <select name="genre" id="genre">
+                    <option value="0">Genre</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+
+                  <select name="experience" id="experience">
+                    <option value="0">Experience</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+
+                  <div class="expiresIn">
+                      <div class="expires-left">
+                          <div class="label">Expire post in</div>
+                      </div>
+
+                      <div class="expires-right">
+                          <input type="number" id="expiresIn" name="expiresIn" step="1" min="1" max="15">
+                          <div class="text">days</div>
+                      </div>
+                  </div>
+
+                  <button id="submit-button" type="submit">Create Post</button>
+            </div>`
+    
+        const memberFormHtml = ``;
+
+        const formContainer = $(".form-container");
+        $("#lfb").click(function(){
+            $("#lfm").removeClass("active");
+            $("#lfb").addClass("active");
+            formContainer.html(bandFormHtml);
+        });
+
+        $("#lfm").click(function(){
+            $("#lfb").removeClass("active");
+            $("#lfm").addClass("active");
+            formContainer.html(memberFormHtml)
+        });
+    </script>
 </body>
 </html>

@@ -96,7 +96,7 @@ select {
   border-radius: 5px 5px 0 0;
 }
 
-.main-container .tabs #lfb {
+.main-container .tabs .active {
   background-color: #828282;
 }
 

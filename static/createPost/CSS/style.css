@@ -164,7 +164,7 @@ select {
   padding: 0;
 }
 
-.main-container .form-container button#submit-button {
+.main-container .form-container button.submit-button {
   padding: 10px !important;
 }
 /*# sourceMappingURL=style.css.map */

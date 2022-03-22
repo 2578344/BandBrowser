@@ -29,7 +29,7 @@
             <button id="lfb" class="active">Looking for Band</button>
             <button id="lfm">Looking for Member</button>
         </div>
-        <div class="form-container">
+        <form id="lfb-form" class="form-container">
             <div class="left">
                 <input name="title" type="text" placeholder="Title">
                 <input name="location" type="text" placeholder="Location">
@@ -69,12 +69,13 @@
                       </div>
                   </div>
 
-                  <button id="submit-button" type="submit">Create Post</button>
+                  <button id="lfb-submit" class="submit-button" type="submit">Create Post</button>
             </div>
-        </div>
+        </form>
     </div>
 
-    <script defer>
+    <!-- Handles Form Tabs -->
+    <script>
         const bandFormHtml = `            
         <div class="left">
                 <input name="title" type="text" placeholder="Title">
@@ -133,5 +134,57 @@
             formContainer.html(memberFormHtml)
         });
     </script>
+
+    <!-- Ajax request helpers -->
+    <script>
+        function get(url){
+            return $.get(url);
+        }
+
+        function post(url, data){
+            return $.post(url, data);
+        }
+
+        function getFormData(formID){
+            var formData = {};
+            $(formID).find("input, textarea, select").each(function(index, element){
+                formData[element.name] = element.value;
+            });
+            return formData;
+        }
+
+        function isInvalid(formData){
+            for(var key in formData){
+                if(formData[key] == ""){
+                    return `${key} cannot be empty`;
+                }
+            }
+            return true;
+        }
+
+    </script>
+
+    <!-- Handles form submissions -->
+    <script>
+        $("#lfb-submit").click(function(e){
+            // stop from auto submitting
+            e.preventDefault();
+            const data = getFormData("#lfb-form");
+            const formInvalid = isInvalid(data);
+            if(formInvalid !== true){
+                alert(formInvalid);
+                return;
+            }
+
+            post("FORM_POST_URL_HERE", data)
+            .then(function(response){
+                console.log(response);
+            }).catch(function(error){
+               alert(":( An error occurred");
+            });
+
+        });
+    </script>
+
 </body>
 </html>

@@ -2,14 +2,15 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from tabnanny import verbose
 from django.contrib.auth.models import User
-
+import datetime
+from datetime import timedelta
 class Post(models.Model):
     TITLE_MAX_LENGTH=128
     postID = models.CharField(max_length=11, unique=True)
     description = models.CharField(max_length=1000)
     title = models.CharField(max_length=TITLE_MAX_LENGTH)
-    publishDate = models.DateField(max_length=128)
-    expireDate = models.DateField()
+    publishDate = models.DateField(max_length=128,default = datetime.date.today())
+    expireDate = models.DateField(default = datetime.date.today()+ timedelta(days=10))
     experienceRequired = models.CharField(max_length=32)
     location = models.CharField(max_length=32)
     genre = models.CharField(max_length=32)
@@ -27,7 +28,7 @@ class Band(models.Model):
     genres = models.CharField(max_length=32)
     commitment = models.CharField(max_length=32)
     location = models.CharField(max_length=128)
-    dateCreated = models.DateField(max_length=128)
+    dateCreated = models.DateField(max_length=128, default = datetime.date.today())
     numberOfPostsActive = models.IntegerField(default=0)
     numberOfCurrentMembers = models.IntegerField(default=0)
     numberOfPotentialMembers = models.IntegerField(default=0)

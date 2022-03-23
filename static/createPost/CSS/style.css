@@ -25,6 +25,9 @@ button:active {
   background-color: #b4b4b4;
 }
 
+h2{
+    color:white;
+}
 input {
   border: solid 1px;
   border-radius: 5px;

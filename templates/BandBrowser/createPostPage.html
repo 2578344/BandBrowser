@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load bandBrowser_template_tags %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -25,52 +26,125 @@
 
     <div class="main-container">
         <div class="tabs">
-            <button id="lfb">Looking for Band</button>
-            <button id="lfm">Looking for Member</button>
+            <button class="tabLinks" onclick ="openTab(event,'createUserPost')" id="lfab">Looking for Band</button>
+            <button class="tabLinks" onclick ="openTab(event,'createBandPost')" id="lfam">Looking for Member</button>
         </div>
-        <div class="form-container">
-            <div class="left">
-                <input name="title" type="text" placeholder="Title">
-                <input name="location" type="text" placeholder="Location">
-                <textarea name="description" id="description" placeholder="Description" cols="30" rows="10"></textarea>
-            </div>
+        <form style="display:none" class = "tabContent" id="createBandPost" method="post" action="{% url 'BandBrowser:createBandPost' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-container">
+                <div class="left">
+                    <h2>Looking for Member</h2>
+                    <input name="title" type="text" placeholder="Title">
+                    <select name="band" id="band">
+                        {% if bands %}
+                            {% for band in bands %}
+                            <option value={{band.name}} >{{ band.name }}</option>
+                            {% endfor %}
+                        {% else %}
+                            <option value="Error">You are not in a band</option>
+                        {% endif%}
+                    </select>
+                    <textarea name="description" id="description" placeholder="Description" cols="30" rows="10"></textarea>
+                </div>
 
-            <div class="right">
-                <select name="commitment" id="commitment">
-                    <option value="0">Commitment</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                  </select>
+                <div class="right">
+                    <input name="location" type="text" placeholder="Location">
+                    <select name="commitment" id="commitment">
+                        <option value="0">Commitment</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                      </select>
 
-                  <select name="genre" id="genre">
-                    <option value="0">Genre</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                  </select>
+                      <select name="genre" id="genre">
+                        <option value="0">Genre</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                      </select>
 
-                  <select name="experience" id="experience">
-                    <option value="0">Experience</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                  </select>
+                      <select name="experience" id="experience">
+                        <option value="0">Experience</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                      </select>
 
-                  <div class="expiresIn">
-                      <div class="expires-left">
-                          <div class="label">Expire post in</div>
+                      <div class="expiresIn">
+                          <div class="expires-left">
+                              <div class="label">Expire post in</div>
+                          </div>
+
+                          <div class="expires-right">
+                              <input type="number" id="expiresIn" name="expiresIn" step="1" min="1" max="15">
+                              <div class="text">days</div>
+                          </div>
                       </div>
 
-                      <div class="expires-right">
-                          <input type="number" id="expiresIn" name="expiresIn" step="1" min="1" max="15">
-                          <div class="text">days</div>
-                      </div>
-                  </div>
-
-                  <button id="submit-button" type="submit">Create Post</button>
+                      <button id="submit-button" type="submit">Create Post</button>
+                </div>
             </div>
-        </div>
+        </form>
+
+        <form class = "tabContent" id="createUserPost" method="post" action="{% url 'BandBrowser:createUserPost' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-container">
+                <div class="left">
+                    <h2>Looking for Band</h2>
+                    <input name="title" type="text" placeholder="Title">
+                    <textarea name="description" id="Userdescription" placeholder="Description" cols="30" rows="10"></textarea>
+                </div>
+
+                <div class="right">
+                    <input name="location" type="text" placeholder="Location">
+                    <select name="commitment" id="Usercommitment">
+                        <option value="0">Commitment</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+
+                    <select name="genre" id="Usergenre">
+                        <option value="0">Genre</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+
+                    <select name="experience" id="Userexperience">
+                        <option value="0">Experience</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+
+                    <div class="expiresIn">
+                        <div class="expires-left">
+                            <div class="label">Expire post in</div>
+                        </div>
+
+                        <div class="expires-right">
+                            <input type="number" id="UserexpiresIn" name="expiresIn" step="1" min="1" max="15">
+                            <div class="text">days</div>
+                        </div>
+                    </div>
+
+                    <button id="Usersubmit-button" type="submit">Create Post</button>
+                </div>
+            </div>
+        </form>
+        <script type="text/javascript">
+            function openTab(evt,createPost) {
+              var i, tabcontent, tablinks;
+
+              // Get all elements with class="tabContent" and hide them
+              tabContent = document.getElementsByClassName("tabContent");
+              for (i = 0; i < tabContent.length; i++) {
+                tabContent[i].style.display = "none";
+              }
+              document.getElementById(createPost).style.display = "block";
+            }
+        </script>
     </div>
 </body>
 </html>

@@ -9,13 +9,17 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.shortcuts import redirect
-import datetime
+from datetime import datetime
+from datetime import timedelta
+
 def index(request):
     post_list = Post.objects.all()
 
     context_dict = {}
     context_dict["post"] = post_list
     return render(request, 'BandBrowser/index.html',context_dict)
+
+
 
 def createBandPage(request):
     return render(request, 'BandBrowser/createBandPage.html')
@@ -28,56 +32,60 @@ def myBandPage(request):
     context_dict["post"] = post_list
     return render(request, 'BandBrowser/myBandPage.html',context_dict)
 
-def createPostPage(request):
-    return render(request, 'BandBrowser/createPostPage.html')
 
-def loginPage(request):
-    return render(request, 'BandBrowser/login.html')
+
+def createPostPage(request):
+    context_dict = {}
+
+    user = User.objects.get(username=request.user)
+    userProfile = UserProfile.objects.get(user = user)
+
+    bands = userProfile.band.all()
+    context_dict["bands"] = bands
+    context_dict["userProfile"] = userProfile
+    return render(request, 'BandBrowser/createPostPage.html',context=context_dict)
+
+def createUserPost(request):
+
+    postID = datetime.now().strftime("%m%d%Y%H%M%S")
+    title = request.POST.get('title')
+    description = request.POST.get('description')
+    location = request.POST.get('location')
+    genre = request.POST.get('genre')
+    commitment = request.POST.get('commitment')
+    experience = request.POST.get('experience')
+    expiresIn = request.POST.get('expiresIn')
+
+    #VALIDATE POST
+
+    post = Post.objects.get_or_create(postID=postID)[0]
+    post.title = title
+    publishDate = datetime.now()
+    post.expireDate = publishDate + timedelta(days= int(expiresIn))
+    post.experienceRequired = experience
+    post.location = location
+    post.genre = genre
+    post.commitment = commitment
+    post.description = description
+    post.save()
+
+    #pull user who wants to create the post - so we can add the post to them
+    user = User.objects.get(username=request.user)
+    userProfile = UserProfile.objects.get(user = user)
+    userProfile.post.add(post)
+    userProfile.save()
+    return render(request, 'BandBrowser/index.html')
+def createBandPost(request):
+    post = 1
+
+
 
 @login_required
 def accountPage(request):
     return render(request, 'BandBrowser/AccountPage.html')
 
-def index(request):
-    return render(request, 'BandBrowser/index.html')
-
-def index(request):
-    return render(request, 'BandBrowser/index.html')
-
-def index(request):
-    return render(request, 'BandBrowser/index.html')
-
-def index(request):
-    return render(request, 'BandBrowser/index.html')
-
 def createAccountPage(request):
     return render(request, 'BandBrowser/CreateAccount.html')
-
-def userLogin(request):
-    if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
-        if user:
-            if user.is_active:
-                login(request, user)
-                print("user logged in")
-                return redirect(reverse('BandBrowser:index'))
-            else:
-                print("Your account is disabled")
-                return HttpResponse("Your BandBrowser account is disabled.")
-        else:
-
-            print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login details supplied.")
-
-
-    else:
-        return render(request, 'BandBrowser/login.html')
-
-def logoutUser(request):
-    logout(request)
-    return redirect("BandBrowser:index")
 
 def registerUser(request):
     registered = False
@@ -116,6 +124,38 @@ def registerUser(request):
         login(request,user)
         return render(request, 'BandBrowser/index.html')
 
+def loginPage(request):
+    return render(request, 'BandBrowser/login.html')
+
+def userLogin(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                login(request, user)
+                print("user logged in")
+                return redirect(reverse('BandBrowser:index'))
+            else:
+                print("Your account is disabled")
+                return HttpResponse("Your BandBrowser account is disabled.")
+        else:
+
+            print(f"Invalid login details: {username}, {password}")
+            return HttpResponse("Invalid login details supplied.")
+    else:
+        return render(request, 'BandBrowser/login.html')
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect("BandBrowser:index")
+
+
+
+
+
 def bandInfoPage(request):
     return render(request, 'BandBrowser/BandInfo.html')
 
@@ -145,6 +185,5 @@ def createBand(request):
        band.numberOfPotentialMembers = 0
        band.currentMember.add(userProfile.user)
        band.save()
-
 
        return render(request, 'BandBrowser/BandInfo.html')

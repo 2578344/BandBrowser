@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from BandBrowser.models import Post
 from BandBrowser.models import Band
+from BandBrowser.models import UserProfile
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
@@ -76,8 +78,35 @@ def logoutUser(request):
     logout(request)
     return redirect("BandBrowser:index")
 
-def register(request):
+def registerUser(request):
     registered = False
+    if request.method == 'POST':
+        #pull user attributes
 
-    #if request.method == 'POST':
-        #userInfo =
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        firstName = request.POST.get('First name')
+        lastName = request.POST.get('Last name')
+        dob = request.POST.get('DOB')
+        email = request.POST.get('Email')
+
+        #pull UserExternal libraries for linked accounts
+
+        instruments = request.POST.get('Main-Instrument')+"&"+request.POST.get('second-Instrument')
+        bio = request.POST.get('description')
+
+        user = User.objects.create_user(username, email, password)
+        user.save()
+
+        userProfile = UserProfile.objects.get_or_create(user=user)[0]
+        userProfile.instruments =instruments
+        userProfile.linkedAccounts = ""
+        userProfile.bio = bio
+        userProfile.numberOfBands = 0
+        userProfile.numberOfPostsActive = 0
+
+        #VALIDATE USER i.e user.check_password("bar")
+        userProfile.save()
+        registered = True
+        login(request,user)
+        return render(request, 'BandBrowser/index.html')

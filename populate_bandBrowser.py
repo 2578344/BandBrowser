@@ -124,6 +124,7 @@ def add_band(name,genres,commitment,location,dateCreated):
     band.numberOfPostsActive = 0
     band.numberOfCurrentMembers = 0
     band.numberOfPotentialMembers = 0
+    band.description =""
     band.save()
     print(band.name +" Band has been created")
     bandInstances.append(band)

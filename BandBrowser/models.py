@@ -28,6 +28,7 @@ class Band(models.Model):
     genres = models.CharField(max_length=32)
     commitment = models.CharField(max_length=32)
     location = models.CharField(max_length=128)
+    description = models.TextField(default ="")
     dateCreated = models.DateField(max_length=128, default = datetime.date.today())
     numberOfPostsActive = models.IntegerField(default=0)
     numberOfCurrentMembers = models.IntegerField(default=0)
@@ -48,6 +49,7 @@ class Band(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    dob = models.DateField(max_length=128, default = datetime.date.today())
     band = models.ManyToManyField(Band)
     post = models.ManyToManyField(Post)
     instruments = models.TextField()

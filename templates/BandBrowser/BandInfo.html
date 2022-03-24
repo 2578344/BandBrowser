@@ -1,6 +1,7 @@
 {% extends 'BandBrowser/base.html' %}
 {% load staticfiles %}
 
+{% load bandBrowser_template_tags %}
 {% block title_block %}
 Band Info
 {% endblock %}
@@ -10,54 +11,73 @@ Band Info
 <link rel="stylesheet" href="{% static 'BandInfo/styles.css' %}">
 <div class="main-container">
     <div class="left-container">
-        <div class="Topleft-container">
-            <div class="general-container">
-                <h2 class="general-label" >General</h2>
-                <input class="general-Form" name="Band name" type="text" placeholder="Band Name">
-                <select class="general-Form" name="commitment-Instrument" id="commitment-Instrument">
-                    <option value="0">Commitment</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
-                <select class="general-Form" name="genres-Instrument" id="genres-Instrument">
-                    <option value="0">Genres</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
+        <form id="bandUpdateForm" method="post" action="{% url 'BandBrowser:updateBandInfo' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="Topleft-container">
+                <div class="general-container">
+                    <h2 class="general-label" >General</h2>
+                    <textarea style = "display:none" name="oldBandName" placeholder="Bio" cols="30" rows="10">{{band.name}}</textarea>
+                    <input  id = "band name" class="general-Form" name="Bandname" type="text" placeholder="Band Name"}} >
+                    <script type="text/javascript">
+                        document.getElementById("band name").value = "{{band.name}}";
+                    </script>
+                    <select class="general-Form" name="commitment" id="commitment-Instrument">
+                        <option value={{band.commitment}}>{{band.commitment}}</option>
+                        <option value="Weekly">Weekly</option>
+                        <option value="Whenever">Whenever</option>
+                        <option value="Daily">Daily</option>
+                    </select>
+                    <select class="general-Form" name="genres" id="genres-Instrument">
+                        <option value={{band.genres}}>{{band.genres}}</option>
+                        <option value="Rock">Rock</option>
+                        <option value="Pop">Pop</option>
+                        <option value="Rap">Rap</option>
+                    </select>
 
-            </div>
-            <div class="info-container">
+                </div>
+                <div class="info-container">
 
-                <input class="location" name="Location" type="text" placeholder="Location">
-                <textarea class="bio" name="description" id="bio" placeholder="Bio" cols="30" rows="10"></textarea>
+                    <input id = "location"class="location" name="Location" type="text" placeholder="Location">
+                    <script type="text/javascript">
+                        document.getElementById("location").value = "{{band.location}}";
+                    </script>
+                    <textarea class="bio" name="description" id="description" placeholder="Bio" cols="30" rows="10">{{band.description}}</textarea>
+                </div>
             </div>
-        </div>
+        </form>
         <div class="Bottomleft-container">
             <h2 class="currentMembers">Current Members</h2>
-            <div class="currentMembers-Container">
-                <a href="temp" class="currentMemberLink" >UserAccount</a>
-                <a href="temp" class="currentMemberDelete" style="color: red">Remove</a>
-            </div>
+            {% for member in CurrentMembers %}
+                <div class="currentMembers-Container">
+                    <a href="temp" class="currentMemberLink" >{{member.username}}</a>
+                    {% if member.username != userProfile.user.username %}
+
+                        <a href="temp" class="currentMemberDelete" style="color: red">Remove</a>
+                    {% else %}
+                        <div class="currentMemberDelete">(You)</div>
+                    {% endif%}
+                </div>
+            {% endfor %}
         </div>
     </div>
     <div class="right-container">
         <div class="currentRequests-container">
             <h2 class="currentRequests">Current Requests</h2>
-            <div class="currentRequest-Container">
-                <a href="temp" class="currentRequestAccountLink" >UserAccount</a>
-                <button class="currentRequestButton">Accept</button>
-                <button class="currentRequestButton" id="DeclineRequest" style = "border-color: black; background-color: #FF0000; color: white" onMouseOver="this.style.background='#CC0000'"
-                        onMouseOut="this.style.background='#FF0000'">Decline</button>
-                &nbsp
-            </div>
+            {% for member in potentialMember %}
+                <div class="currentRequest-Container">
+                    <a href="temp" class="currentRequestAccountLink" >{{member.username}}</a>
+                    <button class="currentRequestButton">Accept</button>
+                    <button class="currentRequestButton" id="DeclineRequest" style = "border-color: black; background-color: #FF0000; color: white" onMouseOver="this.style.background='#CC0000'"
+                            onMouseOut="this.style.background='#FF0000'">Decline</button>
+                    &nbsp
+                </div>
+            {% endfor %}
         </div>
         <div class="buttons-container">
             <button id="leaveBand" style = "border-color: black; background-color: #FF0000; color: white" onMouseOver="this.style.background='#CC0000'"
                     onMouseOut="this.style.background='#FF0000'">Leave Band</button>
             &nbsp;
-            <button>Save Changes</button>
+            <button type="submit" form="bandUpdateForm">>Save Changes</button>
         </div>
     </div>
 </div>

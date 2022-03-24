@@ -10,6 +10,8 @@ urlpatterns = [
 
     path('bandInfoPage/',views.bandInfoPage, name='bandInfoPage'),
     path('updateBandInfo/',views.updateBandInfo, name='updateBandInfo'),
+    path('removeCurrentBandMember/',views.removeCurrentBandMember, name='removeCurrentBandMember'),
+
     path('createBandPage/',views.createBandPage, name='createBandPage'),
     path('createBand/',views.createBand, name ='createBand'),
 

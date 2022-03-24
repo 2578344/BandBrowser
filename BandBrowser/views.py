@@ -19,6 +19,8 @@ def index(request):
     context_dict["post"] = post_list
     return render(request, 'BandBrowser/index.html',context_dict)
 
+# =============================================== POST Functions ===============================================
+
 def createPostPage(request):
     context_dict = {}
 
@@ -92,6 +94,8 @@ def createBandPost(request):
     band.numberOfPostsActive = band.numberOfPostsActive + 1
     band.save()
     return render(request, 'BandBrowser/index.html')
+
+# =============================================== User Functions ===============================================
 
 def loginPage(request):
     return render(request, 'BandBrowser/login.html')
@@ -232,6 +236,7 @@ def viewUserPage(request):
     context_dict["userProfile"] = userProfile
     return render(request, 'BandBrowser/ViewUserPage.html',context=context_dict)
 
+# =============================================== Band Functions ===============================================
 
 def createBandPage(request):
     return render(request, 'BandBrowser/createBandPage.html')
@@ -287,7 +292,6 @@ def updateBandInfo(request):
 
         return render(request, 'BandBrowser/BandInfo.html',context_dict)
 
-
 def createBand(request):
     created = False
     if request.method == 'POST':
@@ -326,3 +330,27 @@ def createBand(request):
         context_dict["userProfile"] = userProfile
 
         return render(request, 'BandBrowser/BandInfo.html',context_dict)
+
+def removeCurrentBandMember(request):
+    band = Band.objects.get(name = request.POST.get('bandName'))
+    user = User.objects.get(username= request.POST.get('memberToRemove'))
+    userToRemove = UserProfile.objects.get(user = user)
+
+    #remove the band from the user
+    userToRemove.band.remove(band)
+    #remove the user from the band
+    band.currentMember.remove(userToRemove.user)
+    userToRemove.numberOfBands = userToRemove.numberOfBands -1
+    band.numberOfCurrentMembers = band.numberOfCurrentMembers -1
+    band.save()
+    userToRemove.save()
+
+    context_dict = {}
+    user = User.objects.get(username=request.user)
+    userProfile = UserProfile.objects.get(user = user)
+    context_dict["band"] = band
+    context_dict["CurrentMembers"] = band.currentMember.all()
+    context_dict["potentialMember"] = band.potentialMember.all()
+    context_dict["userProfile"] = userProfile
+
+    return render(request, 'BandBrowser/BandInfo.html',context_dict)

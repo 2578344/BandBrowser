@@ -49,15 +49,20 @@ Band Info
             <h2 class="currentMembers">Current Members</h2>
             {% for member in CurrentMembers %}
                 <div class="currentMembers-Container">
-                    <form id={{member.username}}" method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <textarea style = "display:none" name="userToView" cols="30" rows="10">{{member.username}}</textarea>
-                        <a class = 'currentMemberLink' href="javascript:{}" onclick="this.closest('form').submit(); return false;">{{member.username}}</a>
-                    </form>
                     {% if member.username != userProfile.user.username %}
-
-                        <a href="temp" class="currentMemberDelete" style="color: red">Remove</a>
+                        <form method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <textarea style = "display:none" name="userToView" cols="30" rows="10">{{member.username}}</textarea>
+                            <a class = 'currentMemberLink' href="javascript:{}" onclick="this.closest('form').submit(); return false;">{{member.username}}</a>
+                        </form>
+                        <form method="post" action="{% url 'BandBrowser:removeCurrentBandMember' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <textarea style = "display:none" name="bandName" cols="30" rows="10">{{band.name}}</textarea>
+                            <textarea style = "display:none" name="memberToRemove" cols="30" rows="10">{{member.username}}</textarea>
+                            <a href="javascript:{}" onclick="this.closest('form').submit(); return false;" class="currentMemberDelete" style="color: red">Remove</a
+                        </form>
                     {% else %}
+                        <div class="currentMemberLink">{{member.username}}</div>
                         <div class="currentMemberDelete">(You)</div>
                     {% endif%}
                 </div>

@@ -20,10 +20,10 @@ Account
         <button id="ChangeProfileImage">Change Profile Image</button>
       </div>
       <div class="info-container">
-        <input name="First name" type="text" placeholder="First Name">
-        <input name="Last name" type="text" placeholder="Last Name">
-        <input type="date" name="DOB" value="2022-01-01" min="1900-01-01" max="2022-01-01">
-        <input name="Email" type="text" placeholder="Email">
+        <input name="First name" type="text" placeholder="First Name" value = {{userProfile.user.first_name}}>
+        <input name="Last name" type="text" placeholder="Last Name" value = {{userProfile.user.last_name}}>
+        <input type="date" name="DOB" value="2022-01-01" min="1900-01-01" max="2022-01-01" value = {{userProfile.dob}}>
+        <input name="Email" type="text" placeholder="Email" value = {{userProfile.user.email}}>
       </div>
     </div>
     <div class="Bottomleft-container">
@@ -45,7 +45,7 @@ Account
   <div class="right-container">
     <div class="instruments-container">
       <select class="instruments-Form" name="Main-Instrument" id="Main-Instrument">
-        <option value="0">Main Instrument</option>
+        <option value="0">{{userProfile.instruments}}</option>
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -57,7 +57,7 @@ Account
         <option value="3">3</option>
       </select>
 
-      <textarea class="bio" name="description" id="description" placeholder="Description" cols="30" rows="10"></textarea>
+      <textarea class="bio" name="Bio" id="Bio" placeholder="Bio" cols="30" rows="10">{{userProfile.bio}}</textarea>
     </div>
     <div class="buttons-container">
         <button id="deleteButton" style = "border-color: black; background-color: #FF0000; color: white" onMouseOver="this.style.background='#CC0000'"

@@ -1,28 +1,13 @@
-<!DOCTYPE html>
-{% load static %}
-{% load bandBrowser_template_tags %}
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BandBrowser | Create a Post</title>
+{% extends 'BandBrowser/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+Create A Post
+{% endblock %}
+
+{% block body_block %}
   <link rel="stylesheet" href="{% static 'createPost/CSS/style.css' %}">
-</head>
-<body>
-<div class="top-container">
-  <div class="left">
-    <h1>Create Post</h1>
-    <a href="{% url 'BandBrowser:index' %}">
-      <button>Return Home</button>
-    </a>
-  </div>
-  <div class="right">
-    <a href="{% url 'BandBrowser:accountPage' %}">
-      <button>My account</button>
-    </a>
-  </div>
-</div>
+
 
 <div class="main-container">
   <div class="tabs">
@@ -38,7 +23,7 @@
         <select name="band" id="band">
           {% if bands %}
           {% for band in bands %}
-          <option value={{band.name}} >{{ band.name }}</option>
+          <option value={{band.slug}} >{{ band.name }}</option>
           {% endfor %}
           {% else %}
           <option value="Error">You are not in a band</option>
@@ -146,5 +131,4 @@
             }
         </script>
 </div>
-</body>
-</html>
+{% endblock %}

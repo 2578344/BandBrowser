@@ -47,28 +47,6 @@ select{
 }
 
 
-.top-container{
-    display: flex;
-    background-color: $color1;
-    justify-content: space-between;
-    padding: 15px 25px 15px 25px;
-
-    .right{
-        display: flex;
-        align-items: center;
-    }
-
-    .left{
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-
-        button{
-            padding: 5px 10px;
-        }
-    }
-
-}
 
 .main-container{
     padding: 15px 25px 15px 25px;

@@ -14,7 +14,6 @@ from datetime import timedelta
 
 def index(request):
     post_list = Post.objects.all()
-    print("HI")
     context_dict = {}
     context_dict["post"] = post_list
     return render(request, 'BandBrowser/index.html',context_dict)
@@ -25,9 +24,11 @@ def createBandPage(request):
 def myBandPage(request):
     band_list = Band.objects.all()
     post_list = Post.objects.all()
+    userProfile_list = UserProfile.objects.all()
     context_dict = {}
     context_dict["bands"] = band_list
     context_dict["post"] = post_list
+    context_dict["userProfile"] = userProfile_list
     return render(request, 'BandBrowser/myBandPage.html',context_dict)
 
 def createPostPage(request):
@@ -71,15 +72,49 @@ def createUserPost(request):
     userProfile.post.add(post)
     userProfile.save()
     return render(request, 'BandBrowser/index.html')
+
 def createBandPost(request):
-    post = 1
+    postID = datetime.now().strftime("%m%d%Y%H%M%S")
+    title = request.POST.get('title')
+    description = request.POST.get('description')
+    location = request.POST.get('location')
+    genre = request.POST.get('genre')
+    commitment = request.POST.get('commitment')
+    experience = request.POST.get('experience')
+    expiresIn = request.POST.get('expiresIn')
+
+    #VALIDATE POST
+
+    post = Post.objects.get_or_create(postID=postID)[0]
+    post.title = title
+    publishDate = datetime.now()
+    post.expireDate = publishDate + timedelta(days= int(expiresIn))
+    post.experienceRequired = experience
+    post.location = location
+    post.genre = genre
+    post.commitment = commitment
+    post.description = description
+    post.save()
+
+    #pull user who wants to create the post - so we can add the post to them
+    print(request.POST.get("band"))
+    band = Band.objects.get(slug=request.POST.get("band"))
+    band.post.add(post)
+    band.save()
+    return render(request, 'BandBrowser/index.html')
 
 def loginPage(request):
     return render(request, 'BandBrowser/login.html')
 
 @login_required
 def accountPage(request):
-    return render(request, 'BandBrowser/AccountPage.html')
+    context_dict = {}
+
+    user = User.objects.get(username=request.user)
+    userProfile = UserProfile.objects.get(user = user)
+
+    context_dict["userProfile"] = userProfile
+    return render(request, 'BandBrowser/AccountPage.html',context=context_dict)
 
 
 def createAccountPage(request):

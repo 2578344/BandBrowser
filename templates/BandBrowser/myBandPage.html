@@ -34,17 +34,19 @@ My Bands
         
     </div>
     <div class="bottom-container">
-        <!--  
-        {% if post %}
-            {% for p in post %} 
+        {% if bands %}
+            {% for b in bands %}
+             <form class = "tabContent" id="createUserPost" method="post" action="{% url 'BandBrowser:bandInfoPage' %}" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="test-div">
-                    <p>title: {{ p.title }} </p>
-                    <p>description: {{ p.description }}</p>
+                    <p>name: {{ b.name }} </p>
+                    <button name="bandName" value = {{b.slug}}  class="create-post-btn">View Band</button>
                 </div>
-            {% endfor %} 
-        {% else %} 
+             </form>
+            {% endfor %}
+        {% else %}
             <p>No posts...</p>
-        {% endif %} -->
+        {% endif %}
 
     </div>
     <button class="create-post-btn"><a href="{% url 'BandBrowser:createBandPage' %}">Create A Band</a></button>

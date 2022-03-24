@@ -22,13 +22,13 @@ def createBandPage(request):
     return render(request, 'BandBrowser/createBandPage.html')
 
 def myBandPage(request):
-    band_list = Band.objects.all()
-    post_list = Post.objects.all()
-    userProfile_list = UserProfile.objects.all()
+    user = User.objects.get(username=request.user)
+    userProfile = UserProfile.objects.get(user = user)
+
+    bands = userProfile.band.all()
     context_dict = {}
-    context_dict["bands"] = band_list
-    context_dict["post"] = post_list
-    context_dict["userProfile"] = userProfile_list
+    context_dict["bands"] = bands
+    context_dict["userProfile"] = userProfile
     return render(request, 'BandBrowser/myBandPage.html',context_dict)
 
 def createPostPage(request):
@@ -236,7 +236,16 @@ def deleteUserAccount(request):
     return redirect("BandBrowser:index")
 
 def bandInfoPage(request):
-    return render(request, 'BandBrowser/BandInfo.html')
+
+    context_dict = {}
+    user = User.objects.get(username=request.user)
+    userProfile = UserProfile.objects.get(user = user)
+    band = Band.objects.get(slug=request.POST.get("bandName"))
+    context_dict["band"] = band
+    context_dict["userProfile"] = userProfile
+    print(band.name)
+    return render(request, 'BandBrowser/BandInfo.html',context=context_dict)
+
 
 def createBand(request):
     created = False
@@ -264,6 +273,7 @@ def createBand(request):
        band.numberOfPotentialMembers = 0
        band.currentMember.add(userProfile.user)
        band.save()
-
+       userProfile.band.add(band)
+       userProfile.save()
 
        return render(request, 'BandBrowser/BandInfo.html')

@@ -1,28 +1,13 @@
-
-<!DOCTYPE html>
+{% extends 'BandBrowser/base.html' %}
 {% load staticfiles %}
 
-{% load bandBrowser_template_tags %}
+{% block title_block %}
+Band Info
+{% endblock %}
 
-<html lang="en">
-<head>
-    <title>Project</title>
-    <link rel="stylesheet" href="{% static 'BandInfo/styles.css' %}">
-</head>
-
+{% block body_block %}
 <body>
-<div class="top-container">
-    <div class="left">
-        <h1 style="padding-bottom:10px">Band Info</h1>
-
-    </div>
-    <div class="right">
-        <button>Logout</button>
-    </div>
-    <button id="top-but" onClick="location.href='index.html'">Homepage</button>
-    <button id="top-but2" >My Band</button>
-</div>
-
+<link rel="stylesheet" href="{% static 'BandInfo/styles.css' %}">
 <div class="main-container">
     <div class="left-container">
         <div class="Topleft-container">
@@ -78,5 +63,4 @@
 </div>
 
 </body>
-
-</html>
+{% endblock %}

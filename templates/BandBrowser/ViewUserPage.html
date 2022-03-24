@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block title_block %}
-{{userProfile.user.username}}'s Account
+{{userToViewProfile.user.username}}'s Account
 {% endblock %}
 
 {% block body_block %}
@@ -21,10 +21,10 @@
                     </div>
                 </div>
                 <div class="info-container">
-                    <input readonly name="First name" type="text" placeholder="First Name" value = {{userProfile.user.first_name}}>
-                    <input readonly name="Last name" type="text" placeholder="Last Name" value = {{userProfile.user.last_name}}>
-                    <input readonly type="date" name="DOB"  min="1900-01-01" max="2022-01-01" value = {{userProfile.dob|date:"Y-m-d" }}>
-                    <input readonly name="Email" type="text" placeholder="Email" value = {{userProfile.user.email}}>
+                    <input readonly name="First name" type="text" placeholder="First Name" value = {{userToViewProfile.user.first_name}}>
+                    <input readonly name="Last name" type="text" placeholder="Last Name" value = {{userToViewProfile.user.last_name}}>
+                    <input readonly type="date" name="DOB"  min="1900-01-01" max="2022-01-01" value = {{userToViewProfile.dob|date:"Y-m-d" }}>
+                    <input readonly name="Email" type="text" placeholder="Email" value = {{userToViewProfile.user.email}}>
                 </div>
             </div>
             <div class="Bottomleft-container">
@@ -43,7 +43,7 @@
         <div class="right-container">
             <div class="instruments-container">
                 <select class="instruments-Form" name="Main-Instrument" id="Main-Instrument" disabled>
-                    <option value={{userProfile.instruments}}>{{userProfile.instruments}}</option>
+                    <option value={{userToViewProfile.instruments}}>{{userToViewProfile.instruments}}</option>
                     <option value="0">Main Instrument</option>
                     <option value="Drums">Drums</option>
                     <option value="Bass">Bass</option>
@@ -52,7 +52,7 @@
                     <option value="Banjo">Banjo</option>
                     <option value="Other">Other</option>
                 </select>
-                <textarea disabled class="bio" name="Bio" id="Bio" placeholder="Bio" cols="30" rows="10">{{userProfile.bio}}</textarea>
+                <textarea disabled class="bio" name="Bio" id="Bio" placeholder="Bio" cols="30" rows="10">{{userToViewProfile.bio}}</textarea>
             </div>
         </div>
     </div>

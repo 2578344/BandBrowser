@@ -215,7 +215,7 @@ def deleteUserAccount(request):
 
     #need to delete any bands the user may be in (if they are the only user)
     for band in Band.objects.filter(currentMember = user):
-        if band.numberOfCurrentMembers == 1:
+        if band.count() == 1:
             #need to delete any posts the band may have made
             for post in band.post.all():
                 post.delete()
@@ -230,10 +230,10 @@ def deleteUserAccount(request):
 def viewUserPage(request):
     context_dict = {}
     print(request.POST.get("userToView"))
-    user = User.objects.get(username=request.POST.get("userToView"))
-    userProfile = UserProfile.objects.get(user = user)
+    userToView = User.objects.get(username=request.POST.get("userToView"))
+    userToViewProfile = UserProfile.objects.get(user = userToView)
 
-    context_dict["userProfile"] = userProfile
+    context_dict["userToViewProfile"] = userToViewProfile
     return render(request, 'BandBrowser/ViewUserPage.html',context=context_dict)
 
 # =============================================== Band Functions ===============================================
@@ -332,18 +332,19 @@ def createBand(request):
         return render(request, 'BandBrowser/BandInfo.html',context_dict)
 
 def removeCurrentBandMember(request):
-    band = Band.objects.get(name = request.POST.get('bandName'))
-    user = User.objects.get(username= request.POST.get('memberToRemove'))
-    userToRemove = UserProfile.objects.get(user = user)
+    band = Band.objects.get(slug = request.POST.get('bandName'))
+    userToRemove = User.objects.get(username= request.POST.get('memberToRemove'))
+    userProfileToRemove = UserProfile.objects.get(user = userToRemove)
 
     #remove the band from the user
-    userToRemove.band.remove(band)
+    userProfileToRemove.band.remove(band)
     #remove the user from the band
-    band.currentMember.remove(userToRemove.user)
-    userToRemove.numberOfBands = userToRemove.numberOfBands -1
+    band.currentMember.remove(userProfileToRemove.user)
+    userProfileToRemove.numberOfBands = userProfileToRemove.numberOfBands -1
+    userProfileToRemove.band.remove(band)
     band.numberOfCurrentMembers = band.numberOfCurrentMembers -1
     band.save()
-    userToRemove.save()
+    userProfileToRemove.save()
 
     context_dict = {}
     user = User.objects.get(username=request.user)
@@ -354,3 +355,72 @@ def removeCurrentBandMember(request):
     context_dict["userProfile"] = userProfile
 
     return render(request, 'BandBrowser/BandInfo.html',context_dict)
+
+def acceptUserJoinRequest(request):
+    band = Band.objects.get(slug = request.POST.get('bandName'))
+
+    userToJoin = User.objects.get(username=request.POST.get('userToJoin'))
+    userProfileToJoin = UserProfile.objects.get(user = userToJoin)
+
+    #add user to the band
+    band.currentMember.add(userToJoin)
+    band.numberOfCurrentMembers = band.numberOfCurrentMembers+1
+    band.numberOfPotentialMembers = band.numberOfPotentialMembers-1
+    band.potentialMember.remove(userToJoin)
+    band.save()
+
+    #add band to user
+    userProfileToJoin.band.add(band)
+    userProfileToJoin.numberOfBands = userProfileToJoin.numberOfBands +1
+    userProfileToJoin.save()
+
+    context_dict = {}
+    user = User.objects.get(username=request.user)
+    userProfile = UserProfile.objects.get(user = user)
+    print(userProfile.user.username)
+    context_dict["band"] = band
+    context_dict["CurrentMembers"] = band.currentMember.all()
+    context_dict["potentialMember"] = band.potentialMember.all()
+    context_dict["userProfile"] = userProfile
+
+    return render(request, 'BandBrowser/BandInfo.html',context_dict)
+
+def declineUserJoinRequest(request):
+    band = Band.objects.get(slug = request.POST.get('bandName'))
+    userNotToJoin = User.objects.get(username=request.POST.get('userNotToJoin'))
+
+    #add user to the band
+    band.numberOfPotentialMembers = band.numberOfPotentialMembers-1
+    band.potentialMember.remove(userNotToJoin)
+    band.save()
+
+    context_dict = {}
+    user = User.objects.get(username=request.user)
+    userProfile = UserProfile.objects.get(user = user)
+    context_dict["band"] = band
+    context_dict["CurrentMembers"] = band.currentMember.all()
+    context_dict["potentialMember"] = band.potentialMember.all()
+    context_dict["userProfile"] = userProfile
+
+    return render(request, 'BandBrowser/BandInfo.html',context_dict)
+
+def leaveBand(request):
+    band = Band.objects.get(slug = request.POST.get('bandSlug'))
+    user = User.objects.get(username=request.user)
+    userProfile = UserProfile.objects.get(user = user)
+    print(userProfile.user.username)
+    userProfile.band.remove(band)
+    userProfile.numberOfBands = userProfile.numberOfBands -1
+    userProfile.save()
+    band.currentMember.remove(user)
+    band.save()
+    #if the only member is themselves the band will be deleted
+    if(band.currentMember.count() ==0):
+        for post in band.post.all():
+            post.delete()
+        band.delete()
+    bands = userProfile.band.all()
+    context_dict = {}
+    context_dict["bands"] = bands
+    context_dict["userProfile"] = userProfile
+    return render(request, 'BandBrowser/myBandPage.html',context_dict)

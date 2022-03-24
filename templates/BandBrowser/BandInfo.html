@@ -37,7 +37,7 @@ Band Info
                 </div>
                 <div class="info-container">
 
-                    <input id = "location"class="location" name="Location" type="text" placeholder="Location">
+                    <input id = "location" class="location" name="Location" type="text" placeholder="Location">
                     <script type="text/javascript">
                         document.getElementById("location").value = "{{band.location}}";
                     </script>
@@ -48,18 +48,19 @@ Band Info
         <div class="Bottomleft-container">
             <h2 class="currentMembers">Current Members</h2>
             {% for member in CurrentMembers %}
+            {{member.username}}
                 <div class="currentMembers-Container">
                     {% if member.username != userProfile.user.username %}
-                        <form method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
+                        <form id="viewUserPageForm" method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
                             {% csrf_token %}
                             <textarea style = "display:none" name="userToView" cols="30" rows="10">{{member.username}}</textarea>
-                            <a class = 'currentMemberLink' href="javascript:{}" onclick="this.closest('form').submit(); return false;">{{member.username}}</a>
+                            <a class = 'currentMemberLink' href="#" onclick="document.forms['viewUserPageForm'].submit(); return false;">{{member.username}}</a>
                         </form>
-                        <form method="post" action="{% url 'BandBrowser:removeCurrentBandMember' %}" enctype="multipart/form-data">
+                        <form id="removeCurrentBandMemberForm" method="post" action="{% url 'BandBrowser:removeCurrentBandMember' %}" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <textarea style = "display:none" name="bandName" cols="30" rows="10">{{band.name}}</textarea>
+                            <textarea style = "display:none" name="bandName" cols="30" rows="10">{{band.slug}}</textarea>
                             <textarea style = "display:none" name="memberToRemove" cols="30" rows="10">{{member.username}}</textarea>
-                            <a href="javascript:{}" onclick="this.closest('form').submit(); return false;" class="currentMemberDelete" style="color: red">Remove</a
+                            <a href="#" onclick="document.forms['removeCurrentBandMemberForm'].submit();" class="currentMemberDelete" style="color: red">Remove</a>
                         </form>
                     {% else %}
                         <div class="currentMemberLink">{{member.username}}</div>
@@ -75,18 +76,30 @@ Band Info
             {% for member in potentialMember %}
                 <div class="currentRequest-Container">
                     <a href="temp" class="currentRequestAccountLink" >{{member.username}}</a>
-                    <button class="currentRequestButton">Accept</button>
-                    <button class="currentRequestButton" id="DeclineRequest" style = "border-color: black; background-color: #FF0000; color: white" onMouseOver="this.style.background='#CC0000'"
-                            onMouseOut="this.style.background='#FF0000'">Decline</button>
-                    &nbsp
+
+                    <form id="acceptUserJoinRequestForm" method="post" action="{% url 'BandBrowser:acceptUserJoinRequest' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <textarea style = "display:none" name="bandName" cols="30" rows="10">{{band.slug}}</textarea>
+                        <button type="submit" form="acceptUserJoinRequestForm" name="userToJoin" value = {{member.username}}  class="create-post-btn">Accept</button>
+                    </form>
+                    <form id="declineUserJoinRequestForm" method="post" action="{% url 'BandBrowser:declineUserJoinRequest' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <textarea style = "display:none" name="bandName" cols="30" rows="10">{{band.slug}}</textarea>
+                        <button type="submit" form="declineUserJoinRequestForm" name="userNotToJoin" value = {{member.username}} class="currentRequestButton" style = "border-color: black; background-color: #FF0000; color: white" onMouseOver="this.style.background='#CC0000'"
+                                onMouseOut="this.style.background='#FF0000'">Decline</button>
+                    </form>
+                    &nbsp;
                 </div>
             {% endfor %}
         </div>
+        &nbsp;
         <div class="buttons-container">
-            <button id="leaveBand" style = "border-color: black; background-color: #FF0000; color: white" onMouseOver="this.style.background='#CC0000'"
-                    onMouseOut="this.style.background='#FF0000'">Leave Band</button>
-            &nbsp;
-            <button type="submit" form="bandUpdateForm">>Save Changes</button>
+            <button type="submit" form="bandUpdateForm">Save Changes</button>
+            <form id="leaveBandForm" method="post" action="{% url 'BandBrowser:leaveBand' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <button form="leaveBandForm" name="bandSlug" value ={{band.slug}} style = "border-color: black; background-color: #FF0000; color: white" onMouseOver="this.style.background='#CC0000'"
+                        onMouseOut="this.style.background='#FF0000'">Leave Band</button>
+            </form>
         </div>
     </div>
 </div>

@@ -11,9 +11,12 @@ urlpatterns = [
     path('bandInfoPage/',views.bandInfoPage, name='bandInfoPage'),
     path('updateBandInfo/',views.updateBandInfo, name='updateBandInfo'),
     path('removeCurrentBandMember/',views.removeCurrentBandMember, name='removeCurrentBandMember'),
+    path('acceptUserJoinRequest/',views.acceptUserJoinRequest, name='acceptUserJoinRequest'),
+    path('declineUserJoinRequest/',views.declineUserJoinRequest, name='declineUserJoinRequest'),
 
     path('createBandPage/',views.createBandPage, name='createBandPage'),
     path('createBand/',views.createBand, name ='createBand'),
+    path('leaveBand/',views.leaveBand, name ='leaveBand'),
 
     path('createPostPage/',views.createPostPage, name='createPostPage'),
     path('createBandPost/',views.createBandPost, name='createBandPost'),

@@ -27,9 +27,7 @@ BandBrowser
           </select>
         
         <input type="text" class="search-input" placeholder="Search"><br>
-        
 
-        
     </div>
 
     <div class="bottom-container">
@@ -47,17 +45,8 @@ BandBrowser
 
             
     </div>
+    {% if user.is_authenticated %}
     <button class="create-post-btn"><a href="{% url 'BandBrowser:createPostPage' %}">Create Post</a></button>
-    {% if post %}
-        {% for p in post %} 
-            <div class="test-div">
-                <p>title: {{ p.title }} </p>
-                <p>description: {{ p.description }}</p>
-            </div>
-        {% endfor %} 
-    {% else %} 
-        <p>No posts...</p>
-    {% endif %} 
-
+    {% endif %}
 
 {% endblock %}

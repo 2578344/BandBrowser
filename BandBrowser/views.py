@@ -9,10 +9,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.shortcuts import redirect
-import datetime
+from datetime import datetime
+from datetime import timedelta
+
 def index(request):
     post_list = Post.objects.all()
-
+    print("HI")
     context_dict = {}
     context_dict["post"] = post_list
     return render(request, 'BandBrowser/index.html',context_dict)
@@ -29,7 +31,48 @@ def myBandPage(request):
     return render(request, 'BandBrowser/myBandPage.html',context_dict)
 
 def createPostPage(request):
-    return render(request, 'BandBrowser/createPostPage.html')
+    context_dict = {}
+
+    user = User.objects.get(username=request.user)
+    userProfile = UserProfile.objects.get(user = user)
+
+    bands = userProfile.band.all()
+    context_dict["bands"] = bands
+    context_dict["userProfile"] = userProfile
+    return render(request, 'BandBrowser/OtherCreatePostPage.html',context=context_dict)
+
+def createUserPost(request):
+
+    postID = datetime.now().strftime("%m%d%Y%H%M%S")
+    title = request.POST.get('title')
+    description = request.POST.get('description')
+    location = request.POST.get('location')
+    genre = request.POST.get('genre')
+    commitment = request.POST.get('commitment')
+    experience = request.POST.get('experience')
+    expiresIn = request.POST.get('expiresIn')
+
+    #VALIDATE POST
+
+    post = Post.objects.get_or_create(postID=postID)[0]
+    post.title = title
+    publishDate = datetime.now()
+    post.expireDate = publishDate + timedelta(days= int(expiresIn))
+    post.experienceRequired = experience
+    post.location = location
+    post.genre = genre
+    post.commitment = commitment
+    post.description = description
+    post.save()
+
+    #pull user who wants to create the post - so we can add the post to them
+    user = User.objects.get(username=request.user)
+    userProfile = UserProfile.objects.get(user = user)
+    userProfile.post.add(post)
+    userProfile.save()
+    return render(request, 'BandBrowser/index.html')
+def createBandPost(request):
+    post = 1
 
 def loginPage(request):
     return render(request, 'BandBrowser/login.html')
@@ -38,17 +81,6 @@ def loginPage(request):
 def accountPage(request):
     return render(request, 'BandBrowser/AccountPage.html')
 
-def index(request):
-    return render(request, 'BandBrowser/index.html')
-
-def index(request):
-    return render(request, 'BandBrowser/index.html')
-
-def index(request):
-    return render(request, 'BandBrowser/index.html')
-
-def index(request):
-    return render(request, 'BandBrowser/index.html')
 
 def createAccountPage(request):
     return render(request, 'BandBrowser/CreateAccount.html')

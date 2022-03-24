@@ -13,6 +13,8 @@ urlpatterns = [
     path('createBand/',views.createBand, name ='createBand'),
 
     path('createPostPage/',views.createPostPage, name='createPostPage'),
+    path('createBandPost/',views.createBandPost, name='createBandPost'),
+    path('createUserPost/',views.createUserPost, name='createUserPost'),
 
     path('accountPage/',views.accountPage, name='accountPage'),
     path('createAccountPage/',views.createAccountPage, name='createAccountPage'),

@@ -20,14 +20,24 @@
                     <button>My account</button>
                 </a>
                 <div class="right">
-                    <button><a href="{% url 'BandBrowser:logout' %}">Logout</a></button>
+                    <a href="{% url 'BandBrowser:logout' %}">
+                        <button>Logout</button>
+                    </a>
                 </div>
                 {% else %}
-                    <button><a href="{% url 'BandBrowser:loginPage' %}">Sign in</a></button>
+                    <a href="{% url 'BandBrowser:loginPage' %}">
+                        <button>Sign in</button>
+                    </a>
+                    <a href="{% url 'BandBrowser:createAccountPage' %}">
+                        <button>register</button>
+                    </a>
                 {% endif %}
             </div>
+
         <button id="top-but" ><a href="{% url 'BandBrowser:index' %}">Homepage</a></button>
+        {% if user.is_authenticated %}
         <button id="top-but2" ><a href="{% url 'BandBrowser:myBandPage' %}">My Band</a></button>
+        {% endif %}
     </div>
 
     <body>

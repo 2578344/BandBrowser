@@ -60,8 +60,11 @@ Account
       <textarea class="bio" name="Bio" id="Bio" placeholder="Bio" cols="30" rows="10">{{userProfile.bio}}</textarea>
     </div>
     <div class="buttons-container">
+      <a href="{% url 'BandBrowser:deleteUserAccount' %}">
         <button id="deleteButton" style = "border-color: black; background-color: #FF0000; color: white" onMouseOver="this.style.background='#CC0000'"
                 onMouseOut="this.style.background='#FF0000'">Delete Account</button>
+      </a>
+
           &nbsp;
         <button>Save Changes</button>
     </div>

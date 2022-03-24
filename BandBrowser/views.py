@@ -183,6 +183,24 @@ def registerUser(request):
         login(request,user)
         return render(request, 'BandBrowser/index.html')
 
+def deleteUserAccount(request):
+    user = User.objects.get(username=request.user)
+    userProfile = UserProfile.objects.get(user = user)
+
+    #need to delete any bands the user may be in (if they are the only user)
+    for band in Band.objects.filter(currentMember = user):
+        if band.numberOfCurrentMembers == 1:
+            #need to delete any posts the band may have made
+            for post in band.post.all():
+                post.delete()
+            band.delete()
+    for post in userProfile.post.all():
+        post.delete()
+    #need to delete any posts the user may have
+    user.delete()
+    userProfile.delete()
+    return redirect("BandBrowser:index")
+
 def bandInfoPage(request):
     return render(request, 'BandBrowser/BandInfo.html')
 
@@ -206,7 +224,7 @@ def createBand(request):
        band.commitment = commitment
        band.location = location
        band.description = description
-       band.dateCreated = datetime.datetime.now()
+       band.dateCreated = datetime.now()
        band.numberOfPostsActive = 0
        band.numberOfCurrentMembers = 0
        band.numberOfPotentialMembers = 0

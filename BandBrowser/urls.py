@@ -17,6 +17,7 @@ urlpatterns = [
     path('createUserPost/',views.createUserPost, name='createUserPost'),
 
     path('accountPage/',views.accountPage, name='accountPage'),
+    path('deleteUserAccount/',views.deleteUserAccount, name='deleteUserAccount'),
     path('createAccountPage/',views.createAccountPage, name='createAccountPage'),
 
     path('register/',views.registerUser, name='register'),

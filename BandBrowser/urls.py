@@ -9,6 +9,7 @@ urlpatterns = [
     path('myBandPage/',views.myBandPage, name='myBandPage'),
 
     path('bandInfoPage/',views.bandInfoPage, name='bandInfoPage'),
+    path('updateBandInfo/',views.updateBandInfo, name='updateBandInfo'),
     path('createBandPage/',views.createBandPage, name='createBandPage'),
     path('createBand/',views.createBand, name ='createBand'),
 

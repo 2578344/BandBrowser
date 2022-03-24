@@ -1,0 +1,60 @@
+{% extends 'BandBrowser/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+{{userProfile.user.username}}'s Account
+{% endblock %}
+
+{% block body_block %}
+<head>
+    <title>Project</title>
+    <link rel="stylesheet" href="{% static 'Account/styles.css' %}">
+</head>
+<form id="userUpdateForm" method="post" action="{% url 'BandBrowser:updateUserAccount' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="main-container">
+        <div class="left-container">
+            <div class="Topleft-container">
+                <div class="photo-container">
+                    <div class="photo-box">
+
+                    </div>
+                </div>
+                <div class="info-container">
+                    <input readonly name="First name" type="text" placeholder="First Name" value = {{userProfile.user.first_name}}>
+                    <input readonly name="Last name" type="text" placeholder="Last Name" value = {{userProfile.user.last_name}}>
+                    <input readonly type="date" name="DOB"  min="1900-01-01" max="2022-01-01" value = {{userProfile.dob|date:"Y-m-d" }}>
+                    <input readonly name="Email" type="text" placeholder="Email" value = {{userProfile.user.email}}>
+                </div>
+            </div>
+            <div class="Bottomleft-container">
+                <h2 class="Social-Header">Linked Accounts</h2>
+                <div class="Social-Container">
+                    <input readonly class="Social-form" name="Spotify" type="text" placeholder="Spotify">
+                </div>
+                <div class="Social-Container">
+                    <input readonly class="Social-form" name="SoundCloud" type="text" placeholder="SoundCloud">
+                </div>
+                <div class="Social-Container">
+                    <input readonly class="Social-form" name="Facebook" type="text" placeholder="Facebook">
+                </div>
+            </div>
+        </div>
+        <div class="right-container">
+            <div class="instruments-container">
+                <select class="instruments-Form" name="Main-Instrument" id="Main-Instrument" disabled>
+                    <option value={{userProfile.instruments}}>{{userProfile.instruments}}</option>
+                    <option value="0">Main Instrument</option>
+                    <option value="Drums">Drums</option>
+                    <option value="Bass">Bass</option>
+                    <option value="Vocals">Vocals</option>
+                    <option value="Guitar">Guitar</option>
+                    <option value="Banjo">Banjo</option>
+                    <option value="Other">Other</option>
+                </select>
+                <textarea disabled class="bio" name="Bio" id="Bio" placeholder="Bio" cols="30" rows="10">{{userProfile.bio}}</textarea>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

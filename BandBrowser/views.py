@@ -11,25 +11,13 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from datetime import datetime
 from datetime import timedelta
+from django.template.defaultfilters import slugify
 
 def index(request):
     post_list = Post.objects.all()
     context_dict = {}
-    # context_dict["post"] = post_list
+    context_dict["post"] = post_list
     return render(request, 'BandBrowser/index.html',context_dict)
-
-def createBandPage(request):
-    return render(request, 'BandBrowser/createBandPage.html')
-
-def myBandPage(request):
-    band_list = Band.objects.all()
-    post_list = Post.objects.all()
-    userProfile_list = UserProfile.objects.all()
-    context_dict = {}
-    # context_dict["bands"] = band_list
-    # context_dict["post"] = post_list
-    context_dict["userProfile"] = userProfile_list
-    return render(request, 'BandBrowser/myBandPage.html',context_dict)
 
 def createPostPage(request):
     context_dict = {}
@@ -162,7 +150,7 @@ def registerUser(request):
 
         #pull UserExternal libraries for linked accounts
 
-        instruments = request.POST.get('Main-Instrument')+"&"+request.POST.get('second-Instrument')
+        instruments = request.POST.get('Main-Instrument')
         bio = request.POST.get('description')
 
         user = User.objects.create_user(username, email, password)
@@ -197,7 +185,7 @@ def updateUserAccount(request):
 
         #pull UserExternal libraries for linked accounts
 
-        instruments = request.POST.get('Main-Instrument')+"&"+request.POST.get('second-Instrument')
+        instruments = request.POST.get('Main-Instrument')
         bio = request.POST.get('Bio')
 
         user = User.objects.get(username=request.user)
@@ -235,35 +223,106 @@ def deleteUserAccount(request):
     userProfile.delete()
     return redirect("BandBrowser:index")
 
+def viewUserPage(request):
+    context_dict = {}
+    print(request.POST.get("userToView"))
+    user = User.objects.get(username=request.POST.get("userToView"))
+    userProfile = UserProfile.objects.get(user = user)
+
+    context_dict["userProfile"] = userProfile
+    return render(request, 'BandBrowser/ViewUserPage.html',context=context_dict)
+
+
+def createBandPage(request):
+    return render(request, 'BandBrowser/createBandPage.html')
+
+def myBandPage(request):
+    user = User.objects.get(username=request.user)
+    userProfile = UserProfile.objects.get(user = user)
+
+    bands = userProfile.band.all()
+    context_dict = {}
+    context_dict["bands"] = bands
+    context_dict["userProfile"] = userProfile
+    return render(request, 'BandBrowser/myBandPage.html',context_dict)
+
 def bandInfoPage(request):
-    return render(request, 'BandBrowser/BandInfo.html')
+
+    context_dict = {}
+    user = User.objects.get(username=request.user)
+    userProfile = UserProfile.objects.get(user = user)
+    band = Band.objects.get(slug=request.POST.get("bandName"))
+    context_dict["band"] = band
+    context_dict["CurrentMembers"] = band.currentMember.all()
+    context_dict["potentialMember"] = band.potentialMember.all()
+    context_dict["userProfile"] = userProfile
+    return render(request, 'BandBrowser/BandInfo.html',context_dict)
+
+def updateBandInfo(request):
+    if request.method == 'POST':
+        #pull user attributes
+        band = Band.objects.get(name = request.POST.get('oldBandName'))
+        name = request.POST.get('Bandname')
+        location = request.POST.get('Location')
+        genre = request.POST.get('genres')
+        commitment = request.POST.get('commitment')
+        description = request.POST.get('description')
+
+        #VALIDATE BAND
+
+        band.name = name
+        band.genres = genre
+        band.commitment = commitment
+        band.location = location
+        band.description = description
+        band.save()
+
+        context_dict = {}
+        user = User.objects.get(username=request.user)
+        userProfile = UserProfile.objects.get(user = user)
+        context_dict["band"] = band
+        context_dict["CurrentMembers"] = band.currentMember.all()
+        context_dict["potentialMember"] = band.potentialMember.all()
+        context_dict["userProfile"] = userProfile
+
+        return render(request, 'BandBrowser/BandInfo.html',context_dict)
+
 
 def createBand(request):
     created = False
     if request.method == 'POST':
-       #pull user who wants to create band - so we can add it to the correct account
-       user = User.objects.get(username=request.user)
-       userProfile = UserProfile.objects.get(user = user)
+        #pull user who wants to create band - so we can add it to the correct account
+        user = User.objects.get(username=request.user)
+        userProfile = UserProfile.objects.get(user = user)
 
-       name = request.POST.get('band-name')
-       location = request.POST.get('location')
-       genre = request.POST.get('genre')
-       commitment = request.POST.get('levelOfCommitment')
-       description = request.POST.get('description')
+        name = request.POST.get('band-name')
+        location = request.POST.get('location')
+        genre = request.POST.get('genre')
+        commitment = request.POST.get('levelOfCommitment')
+        description = request.POST.get('description')
 
-       #VALIDATE BAND
+        #VALIDATE BAND
 
-       band = Band.objects.get_or_create(name=name)[0]
-       band.genres = genre
-       band.commitment = commitment
-       band.location = location
-       band.description = description
-       band.dateCreated = datetime.now()
-       band.numberOfPostsActive = 0
-       band.numberOfCurrentMembers = 0
-       band.numberOfPotentialMembers = 0
-       band.currentMember.add(userProfile.user)
-       band.save()
+        band = Band.objects.get_or_create(name=name)[0]
+        band.genres = genre
+        band.commitment = commitment
+        band.location = location
+        band.description = description
+        band.dateCreated = datetime.now()
+        band.numberOfPostsActive = 0
+        band.numberOfCurrentMembers = 0
+        band.numberOfPotentialMembers = 0
+        band.currentMember.add(userProfile.user)
+        band.save()
+        userProfile.band.add(band)
+        userProfile.save()
 
+        context_dict = {}
+        user = User.objects.get(username=request.user)
+        userProfile = UserProfile.objects.get(user = user)
+        context_dict["band"] = band
+        context_dict["CurrentMembers"] = band.currentMember.all()
+        context_dict["potentialMember"] = band.potentialMember.all()
+        context_dict["userProfile"] = userProfile
 
-       return render(request, 'BandBrowser/BandInfo.html')
+        return render(request, 'BandBrowser/BandInfo.html',context_dict)

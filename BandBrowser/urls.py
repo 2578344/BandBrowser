@@ -17,6 +17,8 @@ urlpatterns = [
     path('createBandPost/',views.createBandPost, name='createBandPost'),
     path('createUserPost/',views.createUserPost, name='createUserPost'),
 
+    path('viewUserPage/',views.viewUserPage, name='viewUserPage'),
+
     path('accountPage/',views.accountPage, name='accountPage'),
     path('deleteUserAccount/',views.deleteUserAccount, name='deleteUserAccount'),
     path('updateUserAccount/',views.updateUserAccount, name='updateUserAccount'),

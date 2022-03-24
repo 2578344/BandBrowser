@@ -49,7 +49,11 @@ Band Info
             <h2 class="currentMembers">Current Members</h2>
             {% for member in CurrentMembers %}
                 <div class="currentMembers-Container">
-                    <a href="temp" class="currentMemberLink" >{{member.username}}</a>
+                    <form id={{member.username}}" method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <textarea style = "display:none" name="userToView" cols="30" rows="10">{{member.username}}</textarea>
+                        <a class = 'currentMemberLink' href="javascript:{}" onclick="this.closest('form').submit(); return false;">{{member.username}}</a>
+                    </form>
                     {% if member.username != userProfile.user.username %}
 
                         <a href="temp" class="currentMemberDelete" style="color: red">Remove</a>

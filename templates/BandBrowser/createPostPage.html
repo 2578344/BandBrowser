@@ -8,6 +8,8 @@
     <title>BandBrowser | Create a Post</title>
     <link rel="stylesheet" href="{% static 'createPost/CSS/style.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'js/FormHelpers.js' %}"></script>
+    <script src="{% static 'js/AjaxHelpers.js' %}"></script>
 </head>
 <body>
     <div class="top-container">
@@ -29,7 +31,7 @@
             <button id="lfb" class="active">Looking for Band</button>
             <button id="lfm">Looking for Member</button>
         </div>
-        <form id="lfb-form" class="form-container">
+        <form id="form" class="form-container">
             <div class="left">
                 <input name="title" type="text" placeholder="Title">
                 <input name="location" type="text" placeholder="Location">
@@ -135,44 +137,15 @@
         });
     </script>
 
-    <!-- Ajax request helpers -->
-    <script>
-        function get(url){
-            return $.get(url);
-        }
-
-        function post(url, data){
-            return $.post(url, data);
-        }
-
-        function getFormData(formID){
-            var formData = {};
-            $(formID).find("input, textarea, select").each(function(index, element){
-                formData[element.name] = element.value;
-            });
-            return formData;
-        }
-
-        function isInvalid(formData){
-            for(var key in formData){
-                if(formData[key] == ""){
-                    return `${key} cannot be empty`;
-                }
-            }
-            return true;
-        }
-
-    </script>
-
-    <!-- Handles form submissions -->
+    <!-- Handles Form Submission -->
     <script>
         $("#lfb-submit").click(function(e){
             // stop from auto submitting
             e.preventDefault();
-            const data = getFormData("#lfb-form");
-            const formInvalid = isInvalid(data);
-            if(formInvalid !== true){
-                alert(formInvalid);
+            const data = getFormData("#form");
+            const valid = validateFormData(data);
+            if(valid.status == false){
+                alert(valid.message);
                 return;
             }
 

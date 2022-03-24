@@ -204,3 +204,20 @@ button:active{
     top: 20px;
 }
 
+/* bootstrap */
+
+#bs-button{
+    background-color:#92A9BD;
+     padding: 2.5px 15px;
+}
+
+#bs-button2{
+    background-color:#92A9BD;
+    padding: 2.5px 15px; left:110px;
+}
+
+#bs-navBar{
+    background-color: #cfcfcf; 
+    margin-left: 10%;
+    margin-right: 10%;
+}

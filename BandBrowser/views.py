@@ -70,6 +70,7 @@ def createUserPost(request):
     user = User.objects.get(username=request.user)
     userProfile = UserProfile.objects.get(user = user)
     userProfile.post.add(post)
+    userProfile.numberOfPostsActive = userProfile.numberOfPostsActive +1
     userProfile.save()
     return render(request, 'BandBrowser/index.html')
 
@@ -100,6 +101,7 @@ def createBandPost(request):
     print(request.POST.get("band"))
     band = Band.objects.get(slug=request.POST.get("band"))
     band.post.add(post)
+    band.numberOfPostsActive = band.numberOfPostsActive + 1
     band.save()
     return render(request, 'BandBrowser/index.html')
 
@@ -182,6 +184,38 @@ def registerUser(request):
         registered = True
         login(request,user)
         return render(request, 'BandBrowser/index.html')
+
+def updateUserAccount(request):
+    registered = False
+    if request.method == 'POST':
+        #pull user attributes
+
+        firstName = request.POST.get('First name')
+        lastName = request.POST.get('Last name')
+        dob = request.POST.get('DOB')
+        email = request.POST.get('Email')
+
+        #pull UserExternal libraries for linked accounts
+
+        instruments = request.POST.get('Main-Instrument')+"&"+request.POST.get('second-Instrument')
+        bio = request.POST.get('Bio')
+
+        user = User.objects.get(username=request.user)
+        user.first_name = firstName
+        user.last_name = lastName
+        user.email = email
+        user.save()
+
+        userProfile = UserProfile.objects.get_or_create(user=user)[0]
+        userProfile.instruments =instruments
+        userProfile.dob = dob
+        userProfile.linkedAccounts = "&&"
+        userProfile.bio = bio
+
+
+        #VALIDATE USER i.e user.check_password("bar")
+        userProfile.save()
+        return redirect("BandBrowser:accountPage")
 
 def deleteUserAccount(request):
     user = User.objects.get(username=request.user)

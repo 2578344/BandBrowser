@@ -18,6 +18,7 @@ urlpatterns = [
 
     path('accountPage/',views.accountPage, name='accountPage'),
     path('deleteUserAccount/',views.deleteUserAccount, name='deleteUserAccount'),
+    path('updateUserAccount/',views.updateUserAccount, name='updateUserAccount'),
     path('createAccountPage/',views.createAccountPage, name='createAccountPage'),
 
     path('register/',views.registerUser, name='register'),

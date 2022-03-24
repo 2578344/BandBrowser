@@ -10,64 +10,66 @@ Account
   <title>Project</title>
   <link rel="stylesheet" href="{% static 'Account/styles.css' %}">
 </head>
+<form id="userUpdateForm" method="post" action="{% url 'BandBrowser:updateUserAccount' %}" enctype="multipart/form-data">
+  {% csrf_token %}
 <div class="main-container">
-  <div class="left-container">
-    <div class="Topleft-container">
-      <div class="photo-container">
-        <div class="photo-box">
+    <div class="left-container">
+      <div class="Topleft-container">
+        <div class="photo-container">
+          <div class="photo-box">
 
+          </div>
+          <button type="button" id="ChangeProfileImage">Change Profile Image</button>
         </div>
-        <button id="ChangeProfileImage">Change Profile Image</button>
+        <div class="info-container">
+          <input name="First name" type="text" placeholder="First Name" value = {{userProfile.user.first_name}}>
+          <input name="Last name" type="text" placeholder="Last Name" value = {{userProfile.user.last_name}}>
+          <input type="date" name="DOB"  min="1900-01-01" max="2022-01-01" value = {{userProfile.dob|date:"Y-m-d" }}>
+          <input name="Email" type="text" placeholder="Email" value = {{userProfile.user.email}}>
+        </div>
       </div>
-      <div class="info-container">
-        <input name="First name" type="text" placeholder="First Name" value = {{userProfile.user.first_name}}>
-        <input name="Last name" type="text" placeholder="Last Name" value = {{userProfile.user.last_name}}>
-        <input type="date" name="DOB" value="2022-01-01" min="1900-01-01" max="2022-01-01" value = {{userProfile.dob}}>
-        <input name="Email" type="text" placeholder="Email" value = {{userProfile.user.email}}>
+      <div class="Bottomleft-container">
+        <h2 class="Social-Header">Linked Accounts</h2>
+        <div class="Social-Container">
+          <input class="Social-form" name="Spotify" type="text" placeholder="Spotify">
+          <button type="button" id="SpotifyChange">Change</button>
+        </div>
+        <div class="Social-Container">
+          <input class="Social-form" name="SoundCloud" type="text" placeholder="SoundCloud">
+          <button type="button" id="SoundCloudChange">Change</button>
+        </div>
+        <div class="Social-Container">
+          <input class="Social-form" name="Facebook" type="text" placeholder="Facebook">
+          <button type="button" id="FacebookChange">Change</button>
+        </div>
       </div>
     </div>
-    <div class="Bottomleft-container">
-      <h2 class="Social-Header">Linked Accounts</h2>
-      <div class="Social-Container">
-        <input class="Social-form" name="Spotify" type="text" placeholder="Spotify">
-        <button id="SpotifyChange">Change</button>
-      </div>
-      <div class="Social-Container">
-        <input class="Social-form" name="SoundCloud" type="text" placeholder="SoundCloud">
-        <button id="SoundCloudChange">Change</button>
-      </div>
-      <div class="Social-Container">
-        <input class="Social-form" name="Facebook" type="text" placeholder="Facebook">
-        <button id="FacebookChange">Change</button>
-      </div>
-    </div>
-  </div>
-  <div class="right-container">
-    <div class="instruments-container">
-      <select class="instruments-Form" name="Main-Instrument" id="Main-Instrument">
-        <option value="0">{{userProfile.instruments}}</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-      </select>
-      <select class="instruments-Form" name="second-Instrument" id="second-Instrument">
-        <option value="0">(Optional) second Instrument</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-      </select>
+    <div class="right-container">
+      <div class="instruments-container">
+        <select class="instruments-Form" name="Main-Instrument" id="Main-Instrument">
+          <option value="0">{{userProfile.instruments}}</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+        <select class="instruments-Form" name="second-Instrument" id="second-Instrument">
+          <option value="0">(Optional) second Instrument</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
 
-      <textarea class="bio" name="Bio" id="Bio" placeholder="Bio" cols="30" rows="10">{{userProfile.bio}}</textarea>
+        <textarea class="bio" name="Bio" id="Bio" placeholder="Bio" cols="30" rows="10">{{userProfile.bio}}</textarea>
+      </div>
+      <div class="buttons-container">
+        <a href="{% url 'BandBrowser:deleteUserAccount' %}">
+          <button type="button" id="deleteButton" style = "border-color: black; background-color: #FF0000; color: white" onMouseOver="this.style.background='#CC0000'"
+                  onMouseOut="this.style.background='#FF0000'">Delete Account</button>
+        </a>
+            &nbsp;
+        <button method="post" id="SaveChanges">Save Changes</button>
+      </div>
     </div>
-    <div class="buttons-container">
-      <a href="{% url 'BandBrowser:deleteUserAccount' %}">
-        <button id="deleteButton" style = "border-color: black; background-color: #FF0000; color: white" onMouseOver="this.style.background='#CC0000'"
-                onMouseOut="this.style.background='#FF0000'">Delete Account</button>
-      </a>
-
-          &nbsp;
-        <button>Save Changes</button>
-    </div>
-  </div>
 </div>
+</form>
 {% endblock %}

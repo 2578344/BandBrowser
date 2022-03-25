@@ -6,12 +6,45 @@ Login to BandBrowser
 {% endblock %}
 
 {% block body_block %}
+
+
 <form id="login" method="post" action="{% url 'BandBrowser:login' %}">
     {% csrf_token %}
-    Username: <input type="text" name="username" value="" size="50" />
-    <br />
-    Password: <input type="password" name="password" value="" size="50" />
-    <br />
-    <input type="submit" value="submit" />
-</form>
+    <!-- Username input -->
+    <div class="form-outline mb-4" style="margin-left:35%;margin-right:35%">
+      <label class="form-label" for="form2Example1">Username:</label>
+      <input type="text" id="form2Example1" name="username" class="form-control" />
+      
+    </div>
+  
+    <!-- Password input -->
+    <div class="form-outline mb-4" style="margin-left:35%;margin-right:35%">
+        <label class="form-label" for="form2Example2">Password:</label>
+      <input type="password" id="form2Example2" name="password" class="form-control" />
+
+    </div>
+
+  
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary btn-block mb-4" style="display: block;width: 30%;margin-left: 35%;">Sign in</button>
+  
+    <!-- Register buttons -->
+    <div class="text-center">
+      <p>Not a member? <a href="{% url 'BandBrowser:createAccountPage' %}">Register</a></p>
+      <p>or sign up with:</p>
+      <button type="button" class="btn btn-link btn-floating mx-1">
+        <i class="fab fa-facebook-f"></i>
+      </button>
+  
+      <button type="button" class="btn btn-link btn-floating mx-1">
+        <i class="fab fa-google"></i>
+      </button>
+  
+      <button type="button" class="btn btn-link btn-floating mx-1">
+        <i class="fab fa-spotify"></i>
+      </button>
+    </div>
+  </form>
+
+
 {% endblock %}

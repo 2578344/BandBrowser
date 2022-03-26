@@ -116,7 +116,7 @@ def AddPostUserToBand(request):
 
     band = Band.objects.get(slug=request.POST.get("band"))
 
-    userToAddToBand = User.objects.get(username=request.POST.get("userToView"))
+    userToAddToBand = User.objects.get(username=request.POST.get("userToAdd"))
     userProfileToAddToBand = UserProfile.objects.get(user = userToAddToBand)
 
     band.currentMember.add(userToAddToBand)
@@ -126,6 +126,19 @@ def AddPostUserToBand(request):
     userProfileToAddToBand.band.add(band)
     userProfileToAddToBand.numberOfBands = userProfileToAddToBand.numberOfBands +1
     userProfileToAddToBand.save()
+
+    return redirect("BandBrowser:index")
+
+def AddUserToRequestMembers(request):
+
+    band = Band.objects.get(slug=request.POST.get("bandToRequestJoin"))
+
+    user = User.objects.get(username=request.user)
+    userProfile = UserProfile.objects.get(user = user)
+
+    band.potentialMember.add(user)
+    band.numberOfPotentialMembers = band.numberOfPotentialMembers +1
+    band.save()
 
     return redirect("BandBrowser:index")
 # =============================================== User Functions ===============================================

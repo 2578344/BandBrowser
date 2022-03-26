@@ -6,6 +6,7 @@ app_name = 'BandBrowser'
 urlpatterns = [
     path('', views.index, name='index'),
     path('AddPostUserToBand/', views.AddPostUserToBand, name='AddPostUserToBand'),
+    path('AddUserToRequestMembers/', views.AddUserToRequestMembers, name='AddUserToRequestMembers'),
 
     path('myBandPage/',views.myBandPage, name='myBandPage'),
 

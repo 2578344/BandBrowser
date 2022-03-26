@@ -18,7 +18,6 @@ from django.urls import path
 from BandBrowser import views
 from django.urls import include
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('BandBrowser/', include('BandBrowser.urls')),
+    path('', include('BandBrowser.urls')),
     path('admin/', admin.site.urls),
 ]

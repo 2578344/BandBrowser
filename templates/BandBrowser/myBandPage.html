@@ -63,8 +63,12 @@ My Bands
              <form class = "tabContent" id="createUserPost" method="post" action="{% url 'BandBrowser:bandInfoPage' %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="test-div">
-                    <p>name: {{ b.name }} </p>
-                    <button name="bandName" value = {{b.slug}}  class="create-post-btn">View Band</button>
+                  <div class="left">
+                    <label name="Title">{{ b.name }}</label>
+                  </div>
+                  <div class="right">
+                    <button name="bandName" value = {{b.slug}}  class="">View Band</button>
+                  </div>
                 </div>
              </form>
             {% endfor %}

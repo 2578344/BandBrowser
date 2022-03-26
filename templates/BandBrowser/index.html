@@ -82,7 +82,7 @@ BandBrowser
                             <form id= 'viewBandPageForm{{bandPost.postID}}{{modelHasPost.slug}}' method="post" action="{% url 'BandBrowser:viewBandPage' %}" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <textarea style = "display:none" name="BandToView" cols="30" rows="10">{{modelHasPost.slug}}</textarea>
-                                <a class = 'PostElement' href="#" onclick="document.forms['viewBandPageForm{{bandPost.postID}}{{modelHasPost.slug}}'].submit(); return false;">View {{modelHasPost.name}}</a>
+                                <a class = 'PostElementLeft' href="#" onclick="document.forms['viewBandPageForm{{bandPost.postID}}{{modelHasPost.slug}}'].submit(); return false;">View {{modelHasPost.name}}</a>
                             </form>
                           </div>
                             <div class="right">
@@ -97,8 +97,6 @@ BandBrowser
                             </div>
                         </div>
                     {% endfor %}
-
-
                 {% elif modelHasPost|get_class == 'UserProfile' %}
                     <!-- object is a user -->
                     {% for userPost in modelHasPost|get_Posts%}
@@ -108,9 +106,7 @@ BandBrowser
                                 <label  class ="PostElement" name ="Title">{{userPost.title}}</label >
                                 <label  class ="PostElement" name ="Description">Description: {{userPost.description}} </label>
                                 <label  class ="PostElement" name ="Date added">Date added: {{userPost.publishDate}}  |  Expires in: {{ userPost.publishDate|GetRemainingTime}}</label >
-                                <form id= 'viewUserPageForm{{userPost.postID}}{{modelHasPost.user.username}}' method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    </form>
+
                                 <form id="viewUserPageForm{{userPost.postID}}{{modelHasPost.user.username}}" method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <textarea style = "display:none" name="userToView" cols="30" rows="10">{{modelHasPost.user.username}}</textarea>
@@ -152,5 +148,4 @@ BandBrowser
     {% if user.is_authenticated %}
     <button class="create-post-btn"><a href="{% url 'BandBrowser:createPostPage' %}">Create Post</a></button>
     {% endif %}
-
 {% endblock %}

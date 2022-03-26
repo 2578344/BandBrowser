@@ -1,6 +1,6 @@
 {% extends 'BandBrowser/base.html' %}
 {% load staticfiles %}
-
+{% load static %}
 {% block title_block %}
 Account
 {% endblock %}
@@ -17,9 +17,17 @@ Account
       <div class="Topleft-container">
         <div class="photo-container">
           <div class="photo-box">
-
+            {%if userProfile.avatar == ""%}
+              <img src="{{MEDIA_URL}}default.jpg"
+                 width="196"
+                 height="196">
+            {%else%}
+            <img src="{{ MEDIA_URL }}{{ userProfile.avatar }}"
+                 width="196"
+                 height="196">
+            {%endif%}
           </div>
-          <button type="button" id="ChangeProfileImage">Change Profile Image</button>
+          {{ form.as_p }}
         </div>
         <div class="info-container">
           <input name="First name" type="text" placeholder="First Name" value = {{userProfile.user.first_name}}>

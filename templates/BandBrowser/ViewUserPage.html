@@ -17,7 +17,15 @@
             <div class="Topleft-container">
                 <div class="photo-container">
                     <div class="photo-box">
-
+                        {%if userToViewProfile.avatar == ""%}
+                        <img src="{{MEDIA_URL}}default.jpg"
+                             width="196"
+                             height="196">
+                        {%else%}
+                        <img src="{{ MEDIA_URL }}{{ userToViewProfile.avatar }}"
+                             width="196"
+                             height="196">
+                        {%endif%}
                     </div>
                 </div>
                 <div class="info-container">

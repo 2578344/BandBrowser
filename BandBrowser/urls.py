@@ -28,6 +28,7 @@ urlpatterns = [
     path('viewBandPage/',views.viewBandPage, name='viewBandPage'),
 
     path('accountPage/',views.accountPage, name='accountPage'),
+    path('uploadUserAvatar/',views.uploadUserAvatar, name='uploadUserAvatar'),
     path('deleteUserAccount/',views.deleteUserAccount, name='deleteUserAccount'),
     path('updateUserAccount/',views.updateUserAccount, name='updateUserAccount'),
     path('createAccountPage/',views.createAccountPage, name='createAccountPage'),

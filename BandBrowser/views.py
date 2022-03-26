@@ -12,6 +12,7 @@ from django.shortcuts import redirect
 from datetime import datetime
 from datetime import timedelta
 from django.template.defaultfilters import slugify
+from BandBrowser.forms import UserProfileForm
 
 def index(request):
     entitiesWhoHavePosts = []
@@ -154,6 +155,8 @@ def accountPage(request):
     userProfile = UserProfile.objects.get(user = user)
 
     context_dict["userProfile"] = userProfile
+    context_dict["form"] = UserProfileForm()
+
     return render(request, 'BandBrowser/AccountPage.html',context=context_dict)
 
 
@@ -223,16 +226,27 @@ def registerUser(request):
         login(request,user)
         return redirect("BandBrowser:index")
 
+def uploadUserAvatar(request):
+    print("request")
+    form = UserProfileForm(request.POST, request.FILES)
+    if form.is_valid():
+        data= form.cleaned_data.get("avatar")
+        print(data)
+        # Get the current instance object to display in the template
+        img_obj = form.instance
+        HttpResponse('successfully uploaded')
+
+
 def updateUserAccount(request):
     registered = False
     if request.method == 'POST':
         #pull user attributes
-
         firstName = request.POST.get('First name')
         lastName = request.POST.get('Last name')
         dob = request.POST.get('DOB')
         email = request.POST.get('Email')
 
+        #img = Image.open(self.image.path) # Open image
         #pull UserExternal libraries for linked accounts
 
         instruments = request.POST.get('Main-Instrument')
@@ -245,6 +259,12 @@ def updateUserAccount(request):
         user.save()
 
         userProfile = UserProfile.objects.get_or_create(user=user)[0]
+        form = UserProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            tempUserProfileform = form.save(commit=False)
+            file= form.cleaned_data.get("avatar")
+            if file is not None:
+                userProfile.avatar = tempUserProfileform.avatar
         userProfile.instruments =instruments
         userProfile.dob = dob
         userProfile.linkedAccounts = "&&"
@@ -261,7 +281,7 @@ def deleteUserAccount(request):
 
     #need to delete any bands the user may be in (if they are the only user)
     for band in Band.objects.filter(currentMember = user):
-        if band.count() == 1:
+        if band.currentMember.count() == 1:
             #need to delete any posts the band may have made
             for post in band.post.all():
                 post.delete()
@@ -289,9 +309,7 @@ def viewBandPage(request):
     context_dict["BandToView"] = bandToView
     context_dict["CurrentMembers"] = bandToView.currentMember.all()
     context_dict["potentialMember"] = bandToView.potentialMember.all()
-    user = User.objects.get(username=request.user)
-    userProfile = UserProfile.objects.get(user = user)
-    context_dict["userProfile"] = userProfile
+
 
     return render(request, 'BandBrowser/ViewBandPage.html',context=context_dict)
 

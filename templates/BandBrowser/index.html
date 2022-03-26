@@ -74,24 +74,27 @@ BandBrowser
                 <!-- object is a band -->
                     {% for bandPost in modelHasPost|get_Posts%}
                     <!-- iterate through every post the band has -->
-                        <div class="test-div">
-                            <label  class ="PostElement" name ="Title">Title: {{bandPost.title}} </label >
-                            <label  class ="PostElement" name ="Date added">Date added: {{bandPost.publishDate}}    Expires in: {{ bandPost.publishDate|GetRemainingTime}}</label >
+                        <div class="test-div post-div">
+                          <div class="left">
+                            <label  class ="PostElement" name ="Title">{{bandPost.title}}</label >
                             <label  class ="PostElement" name ="Description">Description: {{bandPost.description}} </label >
+                            <label  class ="PostElement" name ="Date added">Date added: {{bandPost.publishDate}}  |  Expires in: {{ bandPost.publishDate|GetRemainingTime}}</label >
                             <form id= 'viewBandPageForm{{bandPost.postID}}{{modelHasPost.slug}}' method="post" action="{% url 'BandBrowser:viewBandPage' %}" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <textarea style = "display:none" name="BandToView" cols="30" rows="10">{{modelHasPost.slug}}</textarea>
                                 <a class = 'PostElement' href="#" onclick="document.forms['viewBandPageForm{{bandPost.postID}}{{modelHasPost.slug}}'].submit(); return false;">View {{modelHasPost.name}}</a>
                             </form>
-
-                            <!-- request to join a band button, user needs to be logged in-->
-                            <form id="requestToJoinBand{{bandPost.postID}}{{modelHasPost.slug}}" method="post" action="{% url 'BandBrowser:AddUserToRequestMembers' %}" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                {% if userProfile %}
-                                    <textarea style = "display:none" name="bandToRequestJoin" cols="30" rows="10">{{modelHasPost.slug}}</textarea>
-                                    <button type="submit" form="requestToJoinBand{{bandPost.postID}}{{modelHasPost.slug}}">Request To Join</button>
-                                {% endif %}
-                            </form>
+                          </div>
+                            <div class="right">
+                              <!-- request to join a band button, user needs to be logged in-->
+                              <form id="requestToJoinBand{{bandPost.postID}}{{modelHasPost.slug}}" method="post" action="{% url 'BandBrowser:AddUserToRequestMembers' %}" enctype="multipart/form-data">
+                                  {% csrf_token %}
+                                  {% if userProfile %}
+                                      <textarea style = "display:none" name="bandToRequestJoin" cols="30" rows="10">{{modelHasPost.slug}}</textarea>
+                                      <button type="submit" form="requestToJoinBand{{bandPost.postID}}{{modelHasPost.slug}}">Request To Join</button>
+                                  {% endif %}
+                              </form>
+                            </div>
                         </div>
                     {% endfor %}
 
@@ -100,10 +103,11 @@ BandBrowser
                     <!-- object is a user -->
                     {% for userPost in modelHasPost|get_Posts%}
                             <!-- iterate through every post the band has -->
-                            <div class="test-div">
-                                <label  class ="PostElement" name ="Title">Title: {{userPost.title}} </label >
-                                <label  class ="PostElement" name ="Date added">Date added: {{userPost.publishDate}}    Expires in: {{ userPost.publishDate|GetRemainingTime}}</label >
-                                <label  class ="PostElement" name ="Description">Description: {{userPost.description}} </label
+                            <div class="test-div band">
+                              <div class="left">
+                                <label  class ="PostElement" name ="Title">{{userPost.title}}</label >
+                                <label  class ="PostElement" name ="Description">Description: {{userPost.description}} </label>
+                                <label  class ="PostElement" name ="Date added">Date added: {{userPost.publishDate}}  |  Expires in: {{ userPost.publishDate|GetRemainingTime}}</label >
                                 <form id= 'viewUserPageForm{{userPost.postID}}{{modelHasPost.user.username}}' method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
                                     {% csrf_token %}
                                     </form>
@@ -112,7 +116,9 @@ BandBrowser
                                     <textarea style = "display:none" name="userToView" cols="30" rows="10">{{modelHasPost.user.username}}</textarea>
                                     <a class = 'PostElement' href="#" onclick="document.forms['viewUserPageForm{{userPost.postID}}{{modelHasPost.user.username}}'].submit(); return false;">View {{modelHasPost.user.username}}</a>
                                 </form>
+                              </div>
 
+                              <div class="right">
                                 <!-- invite Post user to a band, logged-in user needs a band to add them to-->
                                 <form id="InviteUserToBandForm{{userPost.postID}}{{modelHasPost.user.username}}" method="post" action="{% url 'BandBrowser:AddPostUserToBand' %}" enctype="multipart/form-data">
                                     {% csrf_token %}
@@ -130,6 +136,7 @@ BandBrowser
                                     <button type="submit" form="InviteUserToBandForm{{userPost.postID}}{{modelHasPost.user.username}}">Invite To Band</button>
                                     {% endif %}
                                 </form>
+                              </div>
 
                             </div>
                     {% endfor %}

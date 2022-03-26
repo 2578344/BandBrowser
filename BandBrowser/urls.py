@@ -23,6 +23,7 @@ urlpatterns = [
     path('createUserPost/',views.createUserPost, name='createUserPost'),
 
     path('viewUserPage/',views.viewUserPage, name='viewUserPage'),
+    path('viewBandPage/',views.viewBandPage, name='viewBandPage'),
 
     path('accountPage/',views.accountPage, name='accountPage'),
     path('deleteUserAccount/',views.deleteUserAccount, name='deleteUserAccount'),

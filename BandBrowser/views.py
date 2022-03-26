@@ -14,8 +14,19 @@ from datetime import timedelta
 from django.template.defaultfilters import slugify
 
 def index(request):
+    entitiesWhoHavePosts = []
+    for band in Band.objects.all():
+        if band.post.exists():
+            print(band)
+            entitiesWhoHavePosts.append(band)
+    for user in UserProfile.objects.all():
+        if user.post.exists():
+            print(user)
+            entitiesWhoHavePosts.append(user)
+
     post_list = Post.objects.all()
     context_dict = {}
+    context_dict["ModelsHavePosts"] = entitiesWhoHavePosts
     context_dict["post"] = post_list
     return render(request, 'BandBrowser/index.html',context_dict)
 
@@ -235,6 +246,19 @@ def viewUserPage(request):
 
     context_dict["userToViewProfile"] = userToViewProfile
     return render(request, 'BandBrowser/ViewUserPage.html',context=context_dict)
+
+def viewBandPage(request):
+    context_dict = {}
+    print("A"+request.POST.get("BandToView"))
+    bandToView = Band.objects.get(slug=request.POST.get("BandToView"))
+    context_dict["BandToView"] = bandToView
+    context_dict["CurrentMembers"] = bandToView.currentMember.all()
+    context_dict["potentialMember"] = bandToView.potentialMember.all()
+    user = User.objects.get(username=request.user)
+    userProfile = UserProfile.objects.get(user = user)
+    context_dict["userProfile"] = userProfile
+
+    return render(request, 'BandBrowser/ViewBandPage.html',context=context_dict)
 
 # =============================================== Band Functions ===============================================
 

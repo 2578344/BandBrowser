@@ -1,0 +1,86 @@
+{% extends 'BandBrowser/base.html' %}
+{% load staticfiles %}
+
+{% load bandBrowser_template_tags %}
+{% block title_block %}
+{{BandToView.name}}'s Info
+{% endblock %}
+
+{% block body_block %}
+<body>
+<link rel="stylesheet" href="{% static 'BandInfo/styles.css' %}">
+<div class="main-container">
+    <div class="left-container">
+        <form id="bandUpdateForm" method="post" action="{% url 'BandBrowser:updateBandInfo' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="Topleft-container">
+                <div class="general-container">
+                    <h2 class="general-label" >General</h2>
+                    <textarea disabled style = "display:none" name="oldBandName" placeholder="Bio" cols="30" rows="10">{{BandToView.name}}</textarea>
+                    <input readonly id = "band name" class="general-Form" name="Bandname" type="text" placeholder="Band Name"}} >
+                    <script type="text/javascript">
+                        document.getElementById("band name").value = "{{BandToView.name}}";
+                    </script>
+                    <select disabled class="general-Form" name="commitment" id="commitment-Instrument">
+                        <option value={{band.commitment}}>{{BandToView.commitment}}</option>
+                        <option value="Weekly">Weekly</option>
+                        <option value="Whenever">Whenever</option>
+                        <option value="Daily">Daily</option>
+                    </select>
+                    <select disabled class="general-Form" name="genres" id="genres-Instrument">
+                        <option value={{band.genres}}>{{BandToView.genres}}</option>
+                        <option value="Rock">Rock</option>
+                        <option value="Pop">Pop</option>
+                        <option value="Rap">Rap</option>
+                    </select>
+
+                </div>
+                <div class="info-container">
+
+                    <input readonly id = "location" class="location" name="Location" type="text" placeholder="Location">
+                    <script type="text/javascript">
+                        document.getElementById("location").value = "{{BandToView.location}}";
+                    </script>
+                    <textarea disabled class="bio" name="description" id="description" placeholder="Bio" cols="30" rows="10">{{BandToView.description}}</textarea>
+                </div>
+            </div>
+        </form>
+        <div class="Bottomleft-container">
+            <h2 class="currentMembers">Current Members</h2>
+            {% for member in CurrentMembers %}
+            <div class="currentMembers-Container">
+                {% if member.username != userProfile.user.username %}
+                <form id="viewUserPageForm{{member.username}}" method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <textarea style = "display:none" name="userToView" cols="30" rows="10">{{member.username}}</textarea>
+                    <a class = 'currentMemberLink' href="#" onclick="document.forms['viewUserPageForm{{member.username}}'].submit(); return false;">{{member.username}}</a>
+                </form>
+                {% else %}
+                <div class="currentMemberLink">{{member.username}}</div>
+                <div class="currentMemberDelete">(You)</div>
+                {% endif%}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="right-container">
+        <div class="currentRequests-container">
+            <h2 class="currentRequests">Current Requests</h2>
+            {% for member in potentialMember %}
+            <div class="currentRequest-Container">
+                <form id="viewRequestUserPageForm{{member.username}}" method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <textarea style = "display:none" name="userToView" cols="30" rows="10">{{member.username}}</textarea>
+                    <a class = 'currentMemberLink' href="#" onclick="document.forms['viewRequestUserPageForm{{member.username}}'].submit(); return false;">{{member.username}}</a>
+                </form>                &nbsp;
+            </div>
+            {% endfor %}
+        </div>
+        &nbsp;
+        <div class="buttons-container">
+        </div>
+    </div>
+</div>
+
+</body>
+{% endblock %}

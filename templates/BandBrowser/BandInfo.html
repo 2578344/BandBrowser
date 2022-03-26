@@ -48,19 +48,18 @@ Band Info
         <div class="Bottomleft-container">
             <h2 class="currentMembers">Current Members</h2>
             {% for member in CurrentMembers %}
-            {{member.username}}
                 <div class="currentMembers-Container">
                     {% if member.username != userProfile.user.username %}
-                        <form id="viewUserPageForm" method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
+                        <form id="viewUserPageForm{{member.username}}" method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
                             {% csrf_token %}
                             <textarea style = "display:none" name="userToView" cols="30" rows="10">{{member.username}}</textarea>
-                            <a class = 'currentMemberLink' href="#" onclick="document.forms['viewUserPageForm'].submit(); return false;">{{member.username}}</a>
+                            <a class = 'currentMemberLink' href="#" onclick="document.forms['viewUserPageForm{{member.username}}'].submit(); return false;">{{member.username}}</a>
                         </form>
-                        <form id="removeCurrentBandMemberForm" method="post" action="{% url 'BandBrowser:removeCurrentBandMember' %}" enctype="multipart/form-data">
+                        <form id="removeCurrentBandMemberForm{{member.username}}" method="post" action="{% url 'BandBrowser:removeCurrentBandMember' %}" enctype="multipart/form-data">
                             {% csrf_token %}
                             <textarea style = "display:none" name="bandName" cols="30" rows="10">{{band.slug}}</textarea>
                             <textarea style = "display:none" name="memberToRemove" cols="30" rows="10">{{member.username}}</textarea>
-                            <a href="#" onclick="document.forms['removeCurrentBandMemberForm'].submit();" class="currentMemberDelete" style="color: red">Remove</a>
+                            <a href="#" onclick="document.forms['removeCurrentBandMemberForm{{member.username}}'].submit();" class="currentMemberDelete" style="color: red">Remove</a>
                         </form>
                     {% else %}
                         <div class="currentMemberLink">{{member.username}}</div>
@@ -75,17 +74,20 @@ Band Info
             <h2 class="currentRequests">Current Requests</h2>
             {% for member in potentialMember %}
                 <div class="currentRequest-Container">
-                    <a href="temp" class="currentRequestAccountLink" >{{member.username}}</a>
-
-                    <form id="acceptUserJoinRequestForm" method="post" action="{% url 'BandBrowser:acceptUserJoinRequest' %}" enctype="multipart/form-data">
+                    <form id="viewRequestUserPageForm{{member.username}}" method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <textarea style = "display:none" name="bandName" cols="30" rows="10">{{band.slug}}</textarea>
-                        <button type="submit" form="acceptUserJoinRequestForm" name="userToJoin" value = {{member.username}}  class="create-post-btn">Accept</button>
+                        <textarea style = "display:none" name="userToView" cols="30" rows="10">{{member.username}}</textarea>
+                        <a class = 'currentMemberLink' href="#" onclick="document.forms['viewRequestUserPageForm{{member.username}}'].submit(); return false;">{{member.username}}</a>
                     </form>
-                    <form id="declineUserJoinRequestForm" method="post" action="{% url 'BandBrowser:declineUserJoinRequest' %}" enctype="multipart/form-data">
+                    <form id="acceptUserJoinRequestForm{{member.username}}" method="post" action="{% url 'BandBrowser:acceptUserJoinRequest' %}" enctype="multipart/form-data">
                         {% csrf_token %}
                         <textarea style = "display:none" name="bandName" cols="30" rows="10">{{band.slug}}</textarea>
-                        <button type="submit" form="declineUserJoinRequestForm" name="userNotToJoin" value = {{member.username}} class="currentRequestButton" style = "border-color: black; background-color: #FF0000; color: white" onMouseOver="this.style.background='#CC0000'"
+                        <button type="submit" form="acceptUserJoinRequestForm{{member.username}}" name="userToJoin" value = {{member.username}}  class="create-post-btn">Accept</button>
+                    </form>
+                    <form id="declineUserJoinRequestForm{{member.username}}" method="post" action="{% url 'BandBrowser:declineUserJoinRequest' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <textarea style = "display:none" name="bandName" cols="30" rows="10">{{band.slug}}</textarea>
+                        <button type="submit" form="declineUserJoinRequestForm{{member.username}}" name="userNotToJoin" value = {{member.username}} class="currentRequestButton" style = "border-color: black; background-color: #FF0000; color: white" onMouseOver="this.style.background='#CC0000'"
                                 onMouseOut="this.style.background='#FF0000'">Decline</button>
                     </form>
                     &nbsp;

@@ -1,6 +1,6 @@
 {% extends 'BandBrowser/base.html' %}
 {% load staticfiles %}
-
+{% load bandBrowser_template_tags %}
 {% block title_block %}
 BandBrowser
 {% endblock %}
@@ -90,13 +90,45 @@ BandBrowser
     </div>
 -->
     <div class="bottom-container">
-        {% if post %}
-            {% for p in post %} 
-                <div class="test-div">
-                    <p>title: {{ p.title }} </p>
-                    <p>description: {{ p.description }}</p>
-                </div>
-            {% endfor %} 
+        {% if ModelsHavePosts %}
+        <!-- go through objects that have a post -->
+            {% for modelHasPost in ModelsHavePosts %}
+                {% if modelHasPost|get_class == 'Band' %}
+                <!-- object is a band -->
+                    {% for bandPost in modelHasPost|get_Posts%}
+                    <!-- iterate through every post the band has -->
+                        <div class="test-div">
+                            <label  class ="PostElement" name ="Title">Title: {{bandPost.title}} </label >
+                            <label  class ="PostElement" name ="Date added">Date added: {{bandPost.publishDate}}    Expires in: {{ bandPost.publishDate|GetRemainingTime}}</label >
+                            <label  class ="PostElement" name ="Description">Description: {{bandPost.description}} </label >
+                            <form id= 'viewBandPageForm{{userPost.postID}}{{modelHasPost.slug}}' method="post" action="{% url 'BandBrowser:viewBandPage' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <textarea style = "display:none" name="BandToView" cols="30" rows="10">{{modelHasPost.slug}}</textarea>
+                                <a class = 'PostElement' href="#" onclick="document.forms['viewBandPageForm{{userPost.postID}}{{modelHasPost.slug}}'].submit(); return false;">View {{modelHasPost.name}}</a>
+                            </form>
+                        </div>
+                    {% endfor %}
+                {% elif modelHasPost|get_class == 'UserProfile' %}
+                    <!-- object is a user -->
+                    {% for userPost in modelHasPost|get_Posts%}
+                        <!-- iterate through every post the band has -->
+                        <div class="test-div">
+                            <label  class ="PostElement" name ="Title">Title: {{userPost.title}} </label >
+                            <label  class ="PostElement" name ="Date added">Date added: {{userPost.publishDate}}    Expires in: {{ userPost.publishDate|GetRemainingTime}}</label >
+                            <label  class ="PostElement" name ="Description">Description: {{userPost.description}} </label
+                            <form id= 'viewUserPageForm{{userPost.postID}}{{modelHasPost.user.username}}' method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                </form>
+                            <form id="viewUserPageForm{{userPost.postID}}{{modelHasPost.user.username}}" method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <textarea style = "display:none" name="userToView" cols="30" rows="10">{{modelHasPost.user.username}}</textarea>
+                                <a class = 'PostElement' href="#" onclick="document.forms['viewUserPageForm{{userPost.postID}}{{modelHasPost.user.username}}'].submit(); return false;">View {{modelHasPost.user.username}}</a>
+
+                            </form>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
         {% else %} 
             <p>No posts...</p>
         {% endif %} 

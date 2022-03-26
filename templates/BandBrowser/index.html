@@ -65,34 +65,11 @@ BandBrowser
             </div>
           </nav>
 
-    <!-- <div class="middle-container"> 
-        <select name="filter1" id="filter1">
-            <option value="0">Most recent</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-          </select>
-          <p id="musicians-p">Musicians</p>
-          <p id="musicians-p2">Bands</p>
-        <div class="left" style="display:inline-block">
-            <input class="radio-btn" type="radio"><br>
-            <input class="radio-btn" type="radio">   
-        </div>
-        <select name="filter2" id="filter2" style="margin-left:60%">
-            <option value="0">Guitarist</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-          </select>
-        
-        <input type="text" class="search-input" placeholder="Search"><br>
-
-    </div>
--->
     <div class="bottom-container">
         {% if ModelsHavePosts %}
         <!-- go through objects that have a post -->
             {% for modelHasPost in ModelsHavePosts %}
+
                 {% if modelHasPost|get_class == 'Band' %}
                 <!-- object is a band -->
                     {% for bandPost in modelHasPost|get_Posts%}
@@ -108,24 +85,44 @@ BandBrowser
                             </form>
                         </div>
                     {% endfor %}
+
+
                 {% elif modelHasPost|get_class == 'UserProfile' %}
                     <!-- object is a user -->
                     {% for userPost in modelHasPost|get_Posts%}
-                        <!-- iterate through every post the band has -->
-                        <div class="test-div">
-                            <label  class ="PostElement" name ="Title">Title: {{userPost.title}} </label >
-                            <label  class ="PostElement" name ="Date added">Date added: {{userPost.publishDate}}    Expires in: {{ userPost.publishDate|GetRemainingTime}}</label >
-                            <label  class ="PostElement" name ="Description">Description: {{userPost.description}} </label
-                            <form id= 'viewUserPageForm{{userPost.postID}}{{modelHasPost.user.username}}' method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
-                                {% csrf_token %}
+                            <!-- iterate through every post the band has -->
+                            <div class="test-div">
+                                <!--<label  class ="PostElement" name ="Title">Title: {{userPost.title}} </label >
+                                <label  class ="PostElement" name ="Date added">Date added: {{userPost.publishDate}}    Expires in: {{ userPost.publishDate|GetRemainingTime}}</label >
+                                <label  class ="PostElement" name ="Description">Description: {{userPost.description}} </label
+                                --><form id= 'viewUserPageForm{{userPost.postID}}{{modelHasPost.user.username}}' method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    </form>
+                                <form id="viewUserPageForm{{userPost.postID}}{{modelHasPost.user.username}}" method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <textarea style = "display:none" name="userToView" cols="30" rows="10">{{modelHasPost.user.username}}</textarea>
+                                    <a class = 'PostElement' href="#" onclick="document.forms['viewUserPageForm{{userPost.postID}}{{modelHasPost.user.username}}'].submit(); return false;">View {{modelHasPost.user.username}}</a>
                                 </form>
-                            <form id="viewUserPageForm{{userPost.postID}}{{modelHasPost.user.username}}" method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <textarea style = "display:none" name="userToView" cols="30" rows="10">{{modelHasPost.user.username}}</textarea>
-                                <a class = 'PostElement' href="#" onclick="document.forms['viewUserPageForm{{userPost.postID}}{{modelHasPost.user.username}}'].submit(); return false;">View {{modelHasPost.user.username}}</a>
 
-                            </form>
-                        </div>
+                                <!-- invite Post user to a band, logged-in user needs a band to add them to-->
+                                <form id="InviteUserToBandForm{{userPost.postID}}{{modelHasPost.user.username}}" method="post" action="{% url 'BandBrowser:AddPostUserToBand' %}" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <select class = 'PostElement' name="band" id="band">
+                                        {% if userProfileBands %}
+                                            {% for band in userProfileBands %}
+                                                <option value={{band.slug}} >{{ band.name }}</option>
+                                            {% endfor %}
+                                        {% else %}
+                                            <option value="Error">You are not in a band</option>
+                                        {% endif%}
+                                    </select>
+                                    <textarea style = "display:none" name="userToView" cols="30" rows="10">{{modelHasPost.user.username}}</textarea>
+                                    {% if userProfileBands %}
+                                    <button type="submit" form="InviteUserToBandForm{{userPost.postID}}{{modelHasPost.user.username}}">Invite To Band</button>
+                                    {% endif %}
+                                </form>
+
+                            </div>
                     {% endfor %}
                 {% endif %}
             {% endfor %}

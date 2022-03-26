@@ -24,9 +24,15 @@ def get_class(value):
 @register.filter(name='get_Posts')
 def get_class(value):
     print(value.post.all())
-    return value.post.all()\
+    return value.post.all()
 
 @register.filter(name='GetRemainingTime')
 def get_class(posting_date):
     delta = datetime.now().date() - posting_date
     return str(delta.days) + " days"
+
+@register.filter(name='getAllBandMembers')
+def getAllBandMembers(band):
+    print("H")
+    print(list(chain(band.currentMember,band.potentialMember)))
+    return list(chain(band.currentMember,band.potentialMember))

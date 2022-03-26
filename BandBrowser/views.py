@@ -26,6 +26,12 @@ def index(request):
 
     post_list = Post.objects.all()
     context_dict = {}
+    print(request.user)
+    if(request.user.is_anonymous ==False):
+        user = User.objects.get(username=request.user)
+        userProfile = UserProfile.objects.get(user = user)
+        context_dict["userProfileBands"] = userProfile.band.all()
+        context_dict["userProfile"] = userProfile
     context_dict["ModelsHavePosts"] = entitiesWhoHavePosts
     context_dict["post"] = post_list
     return render(request, 'BandBrowser/index.html',context_dict)
@@ -73,7 +79,7 @@ def createUserPost(request):
     userProfile.post.add(post)
     userProfile.numberOfPostsActive = userProfile.numberOfPostsActive +1
     userProfile.save()
-    return render(request, 'BandBrowser/index.html')
+    return redirect("BandBrowser:index")
 
 def createBandPost(request):
     postID = datetime.now().strftime("%m%d%Y%H%M%S")
@@ -104,8 +110,24 @@ def createBandPost(request):
     band.post.add(post)
     band.numberOfPostsActive = band.numberOfPostsActive + 1
     band.save()
-    return render(request, 'BandBrowser/index.html')
+    return redirect("BandBrowser:index")
 
+def AddPostUserToBand(request):
+
+    band = Band.objects.get(slug=request.POST.get("band"))
+
+    userToAddToBand = User.objects.get(username=request.POST.get("userToView"))
+    userProfileToAddToBand = UserProfile.objects.get(user = userToAddToBand)
+
+    band.currentMember.add(userToAddToBand)
+    band.numberOfCurrentMembers = band.numberOfCurrentMembers +1
+    band.save()
+
+    userProfileToAddToBand.band.add(band)
+    userProfileToAddToBand.numberOfBands = userProfileToAddToBand.numberOfBands +1
+    userProfileToAddToBand.save()
+
+    return redirect("BandBrowser:index")
 # =============================================== User Functions ===============================================
 
 def loginPage(request):
@@ -134,7 +156,7 @@ def userLogin(request):
             if user.is_active:
                 login(request, user)
                 print("user logged in")
-                return redirect(reverse('BandBrowser:index'))
+                return redirect("BandBrowser:index")
             else:
                 print("Your account is disabled")
                 return HttpResponse("Your BandBrowser account is disabled.")
@@ -186,7 +208,7 @@ def registerUser(request):
         userProfile.save()
         registered = True
         login(request,user)
-        return render(request, 'BandBrowser/index.html')
+        return redirect("BandBrowser:index")
 
 def updateUserAccount(request):
     registered = False

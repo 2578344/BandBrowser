@@ -13,6 +13,8 @@ from datetime import datetime
 from datetime import timedelta
 from django.template.defaultfilters import slugify
 from BandBrowser.forms import UserProfileForm
+from django.contrib import messages
+from django.core.exceptions import ValidationError
 
 def index(request):
     entitiesWhoHavePosts = []
@@ -72,6 +74,12 @@ def createUserPost(request):
     post.genre = genre
     post.commitment = commitment
     post.description = description
+    try:
+        post.clean()
+    except ValidationError as e:
+        errorMessage ='; '.join(e.messages)
+        messages.info(request, errorMessage)
+        return redirect("BandBrowser:createPostPage")
     post.save()
 
     #pull user who wants to create the post - so we can add the post to them
@@ -80,6 +88,7 @@ def createUserPost(request):
     userProfile.post.add(post)
     userProfile.numberOfPostsActive = userProfile.numberOfPostsActive +1
     userProfile.save()
+    messages.info(request, 'Post Created!')
     return redirect("BandBrowser:index")
 
 def createBandPost(request):
@@ -103,6 +112,12 @@ def createBandPost(request):
     post.genre = genre
     post.commitment = commitment
     post.description = description
+    try:
+        post.clean()
+    except ValidationError as e:
+        errorMessage ='; '.join(e.messages)
+        messages.info(request, errorMessage)
+        return redirect("BandBrowser:createPostPage")
     post.save()
 
     #pull user who wants to create the post - so we can add the post to them
@@ -111,6 +126,7 @@ def createBandPost(request):
     band.post.add(post)
     band.numberOfPostsActive = band.numberOfPostsActive + 1
     band.save()
+    messages.info(request, 'Post Created!')
     return redirect("BandBrowser:index")
 
 def AddPostUserToBand(request):
@@ -205,8 +221,13 @@ def registerUser(request):
 
         instruments = request.POST.get('Main-Instrument')
         bio = request.POST.get('description')
+        try:
+            user = User.objects.create_user(username, email, password)
+        except Exception as e:
+            errorMessage ='invalid user credentials'
+            messages.info(request, errorMessage)
+            return redirect("BandBrowser:createAccountPage")
 
-        user = User.objects.create_user(username, email, password)
         user.first_name = firstName
         user.last_name = lastName
         user.save()
@@ -218,7 +239,6 @@ def registerUser(request):
         userProfile.bio = bio
         userProfile.numberOfBands = 0
         userProfile.numberOfPostsActive = 0
-
 
         #VALIDATE USER i.e user.check_password("bar")
         userProfile.save()
@@ -257,7 +277,6 @@ def updateUserAccount(request):
         user.last_name = lastName
         user.email = email
         user.save()
-
         userProfile = UserProfile.objects.get_or_create(user=user)[0]
         form = UserProfileForm(request.POST, request.FILES)
         if form.is_valid():

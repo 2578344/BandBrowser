@@ -1,7 +1,10 @@
 from django import template
-from BandBrowser.models import UserProfile
 from datetime import datetime
 from datetime import timedelta
+from BandBrowser.models import Post
+from BandBrowser.models import Band
+from BandBrowser.models import UserProfile
+from django.contrib.auth.models import User
 register = template.Library()
 
 def get_category_list():
@@ -20,6 +23,15 @@ def getBandName(band):
 @register.filter(name='get_class')
 def get_class(value):
     return value.__class__.__name__
+
+@register.filter(name='getBandPosts')
+def getBandPosts(entitiesWhoHavePosts):
+    entitiesWhoHavePosts =[]
+    for band in Band.objects.all():
+        if band.post.exists():
+            print(band)
+            entitiesWhoHavePosts.append(band)
+    return {"ModelsHavePosts":entitiesWhoHavePosts}
 
 @register.filter(name='get_Posts')
 def get_class(value):

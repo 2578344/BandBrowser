@@ -30,7 +30,11 @@ SECRET_KEY = 'disi$ovb5!lut!itllrs2q989d3u94)78)9b0_+2m$!9i%d*)i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "umaryusuf11.pythonanywhere.com"
+]
 
 
 # Application definition

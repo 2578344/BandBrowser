@@ -37,4 +37,6 @@ urlpatterns = [
     path('loginPage/',views.loginPage, name='loginPage'),
     path('login/',views.userLogin, name='login'),
     path('logout/',views.logoutUser, name='logout'),
+
+    path('gitPull/',views.gitPull, name='gitPull'),
 ]

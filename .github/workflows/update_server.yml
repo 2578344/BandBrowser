@@ -1,0 +1,17 @@
+name: Update Server
+
+on:
+  push:
+    branches: [ prod ]
+  pull_request:
+    branches: [ prod ]
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy Stage
+      uses: fjogeleit/http-request-action@v1
+      with:
+        url: 'http://umaryusuf11.pythonanywhere.com/gitPull/?secret=mjijBM1yr0ZLnWrDDa3ilCElG4AKCuZU&gitUser=umaryusuf11&gitPAT=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'
+        method: 'GET'

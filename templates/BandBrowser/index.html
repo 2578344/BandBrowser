@@ -44,7 +44,7 @@ BandBrowser
                     </select>
                   <li class="nav-item" >
                     <div class="input-group rounded">
-                      <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                      <input id = "formSearchInput" type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
                       <span class="input-group-text border-0" id="search-addon">
                         <i class="fas fa-search"></i>
                       </span>
@@ -68,7 +68,7 @@ BandBrowser
                           <div class="left">
                             <label  class ="PostElement" name ="Title">{{bandPost.title}}</label >
                             <label  class ="PostElement" name ="Description">Description: {{bandPost.description}} </label >
-                            <label  class ="PostElement" name ="Date added">Date added: {{bandPost.publishDate}}  |  Expires in: {{ bandPost.publishDate|GetRemainingTime}}</label >
+                            <label id = "publishDate" value = {{bandPost.publishDate}} class ="PostElement" name ="Date added">Date added: {{bandPost.publishDate}}  |  Expires in: {{ bandPost.publishDate|GetRemainingTime}}</label >
                             <form id= 'viewBandPageForm{{bandPost.postID}}{{modelHasPost.slug}}' method="post" action="{% url 'BandBrowser:viewBandPage' %}" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <textarea style = "display:none" name="BandToView" cols="30" rows="10">{{modelHasPost.slug}}</textarea>
@@ -95,8 +95,7 @@ BandBrowser
                               <div class="left">
                                 <label  class ="PostElement" name ="Title">{{userPost.title}}</label >
                                 <label  class ="PostElement" name ="Description">Description: {{userPost.description}} </label>
-                                <label  class ="PostElement" name ="Date added">Date added: {{userPost.publishDate}}  |  Expires in: {{ userPost.publishDate|GetRemainingTime}}</label >
-
+                                <label id = "publishDate" value = {{userPost.publishDate}} class ="PostElement" name ="Date added">Date added: {{userPost.publishDate}}  |  Expires in: {{ userPost.publishDate|GetRemainingTime}}</label >
                                 <form id="viewUserPageForm{{userPost.postID}}{{modelHasPost.user.username}}" method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <textarea style = "display:none" name="userToView" cols="30" rows="10">{{modelHasPost.user.username}}</textarea>
@@ -138,6 +137,28 @@ BandBrowser
 <script type="text/javascript">
 var checkboxBand = document.getElementById("chbxBand");
 var checkboxUser = document.getElementById("chbxUser");
+var searchBar = document.getElementById("formSearchInput");
+allPostElements= document.querySelectorAll('.test-div');
+searchBar.addEventListener("keydown", (e) => {
+    if (e.key == "Enter" && searchBar.value != "")
+    {
+        for (i = 0; i < allPostElements.length; i++)
+        {
+           if(allPostElements[i].innerHTML.indexOf(searchBar.value) !== -1)
+           {
+            allPostElements[i].style.display = "-webkit-box";
+           }
+           else
+           {
+           allPostElements[i].style.display = "none";
+           }
+       }
+    }
+    else if (e.key == "Enter" && searchBar.value == "")
+    {
+        filter();
+    }
+});
 
 function filter(){
     var i, allPostElements, array1, array2, order;
@@ -145,8 +166,6 @@ function filter(){
     array1 = document.getElementsByClassName("test-div post-div");
     array2 = document.getElementsByClassName("test-div band");
     allPostElements= document.querySelectorAll('.test-div');
-
-    order = document.getElementById("sortBy").value;
 
     for (i = 0; i < allPostElements.length; i++)
     {
@@ -163,6 +182,7 @@ function filter(){
             array2[i].style.display = "none";
         }
     }
+
 };
 </script>
 {% endblock %}

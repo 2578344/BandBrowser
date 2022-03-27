@@ -1,4 +1,5 @@
-from multiprocessing import context
+import os
+import requests
 from django.shortcuts import render
 from django.http import HttpResponse
 from BandBrowser.models import Post
@@ -501,3 +502,50 @@ def leaveBand(request):
     context_dict["bands"] = bands
     context_dict["userProfile"] = userProfile
     return render(request, 'BandBrowser/myBandPage.html',context_dict)
+
+
+# =============================================== CI/CD Functions ===============================================
+def reloadServer():
+    print("Reloading Server")
+    # /api/v0/user/{username}/webapps/{domain_name}/reload/
+    username = 'umaryusuf11'
+    token = 'f7cfb92024dc2e2484ec3c654108f510d95d2a53'
+    host = 'www.pythonanywhere.com'
+    domain_name = 'umaryusuf11.pythonanywhere.com'
+
+    response = requests.post(
+        'https://{host}/api/v0/user/{username}/webapps/{domain_name}/reload/'.format(
+            host=host, username=username, domain_name=domain_name
+        ),
+        headers={'Authorization': 'Token {token}'.format(token=token)}
+    )
+    
+    return response.status_code
+
+def gitPull(request):
+    # check if request is GET
+    if(request.method != 'GET'):
+        return HttpResponse("Method not allowed")
+    
+    secret = request.GET.get('secret')
+    gitUser = request.GET.get('gitUser')
+    gitPAT = request.GET.get('gitPAT')
+
+    if(secret == None or gitUser == None or gitPAT == None):
+        return HttpResponse("Missing Parameters", status=400)
+    
+    if(secret != 'mjijBM1yr0ZLnWrDDa3ilCElG4AKCuZU'):
+        return HttpResponse("Invalid Secret", status=401)
+    
+    pullCommand = "git pull https://" + gitUser + ":" + gitPAT + "@github.com/2578344/project7.git prod"
+    # git pull from prod branch of current repo
+    status = os.system(pullCommand)
+    if(status != 0):
+        return HttpResponse("There has been an error pulling from the repo. Make sure you have the correct credentials. Check server logs for more info.", status=status)
+    
+    reload = reloadServer()
+    if(reload != 200):
+        return HttpResponse("There has been an error reloading the server. Reload Returned Status: " + str(reload), status=reload)
+
+    print("Pulled from repo and reloaded server.")
+    return HttpResponse("Success")

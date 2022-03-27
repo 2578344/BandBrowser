@@ -20,7 +20,7 @@ BandBrowser
                 <ul class="navbar-nav " >
                   <li class="nav-item" style="margin-top:5px" >
                     <select id = "sortBy" class="form-select" aria-label="Default select example">
-                      <option selected>Sort By</option>
+                      <option value="0" selected>Sort By</option>
                       <option value="1">Most recent</option>
                       <option value="2">Oldest</option>
                       <option value="3">Days Remaining</option>
@@ -30,12 +30,12 @@ BandBrowser
                   </li>
                   <li class="nav-item" style="margin-left:10px">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="chbxUser" onchange="filter()" checked>
-                      <label class="form-check-label" for="flexCheckDefault">Musicians</label>
+                      <input class="form-check-input" type="checkbox" value="" id="chbxUser" checked>
+                      <label class="form-check-label" for="flexCheckDefault">Looking for Musicians</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="chbxBand" onchange="filter()" checked>
-                        <label class="form-check-label" for="flexCheckChecked">Bands</label>
+                        <input class="form-check-input" type="checkbox" value="" id="chbxBand" checked>
+                        <label class="form-check-label" for="flexCheckChecked">Looking for Bands</label>
                     </div>
                   </li>
                   <li class="nav-item invisible" >
@@ -134,55 +134,75 @@ BandBrowser
     {% if user.is_authenticated %}
     <button class="create-post-btn"><a href="{% url 'BandBrowser:createPostPage' %}">Create Post</a></button>
     {% endif %}
+  
+  <!-- Handles Checkbox Filter -->
 <script type="text/javascript">
-var checkboxBand = document.getElementById("chbxBand");
-var checkboxUser = document.getElementById("chbxUser");
-var searchBar = document.getElementById("formSearchInput");
-allPostElements= document.querySelectorAll('.test-div');
-searchBar.addEventListener("keydown", (e) => {
-    if (e.key == "Enter" && searchBar.value != "")
-    {
-        for (i = 0; i < allPostElements.length; i++)
-        {
-           if(allPostElements[i].innerHTML.indexOf(searchBar.value) !== -1)
-           {
-            allPostElements[i].style.display = "-webkit-box";
-           }
-           else
-           {
-           allPostElements[i].style.display = "none";
-           }
-       }
-    }
-    else if (e.key == "Enter" && searchBar.value == "")
-    {
-        filter();
-    }
-});
+  // get all elements with class "post-div" as an array with jquery
+  var array1 = $("div.test-div.post-div");
+  var array2 = $("div.test-div.band");
 
-function filter(){
-    var i, allPostElements, array1, array2, order;
+  // if chbxUser if checked, show all elements with class "post-div"
+  $("#chbxUser").change(function(){
+      if(this.checked){
+          array1.each(function(){
+              $(this).show();
+          });
+      }
+      else{
+          array1.each(function(){
+              $(this).hide();
+          });
+      }
+  });
 
-    array1 = document.getElementsByClassName("test-div post-div");
-    array2 = document.getElementsByClassName("test-div band");
-    allPostElements= document.querySelectorAll('.test-div');
+  // if chbxBand if checked, show all elements with class "band"
+  $("#chbxBand").change(function(){
+      if(this.checked){
+          array2.each(function(){
+              $(this).show();
+          });
+      }
+      else{
+          array2.each(function(){
+              $(this).hide();
+          });
+      }
+  });
 
-    for (i = 0; i < allPostElements.length; i++)
-    {
-        if(checkboxBand.checked== true){
-            array1[i].style.display = "-webkit-box";
-        }
-        else if(checkboxBand.checked== false) {
-            array1[i].style.display = "none";
-        }
-        if(checkboxUser.checked== true){
-            array2[i].style.display = "-webkit-box";
-        }
-        else if(checkboxUser.checked== false) {
-            array2[i].style.display = "none";
-        }
-    }
+</script>
 
-};
+<!-- Handles Searchbar -->
+<script type="text/javascript">
+  // get all elements with class "post-div" as an array with jquery
+  var array1 = $("div.test-div.post-div");
+  var array2 = $("div.test-div.band");
+
+  // if chbxUser if checked, show all elements with class "post-div"
+  $("#formSearchInput").keyup(function(){
+      var search = $(this).val();
+      array1.each(function(){
+          if($(this).text().search(new RegExp(search, "i")) < 0){
+              $(this).hide();
+          }
+          else{
+              $(this).show();
+          }
+      });
+      array2.each(function(){
+          if($(this).text().search(new RegExp(search, "i")) < 0){
+              $(this).hide();
+          }
+          else{
+              $(this).show();
+          }
+      });
+  });
+</script>
+
+<!-- Handles Sort By -->
+<script type="text/javascript">
+  $("#sortBy").change(function(){
+    console.log(this.value);
+  })
 </script>
 {% endblock %}

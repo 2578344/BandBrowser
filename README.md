@@ -5,4 +5,5 @@
   <li>python=3.9</li>
   <li>django=2.2.26</li>
   <li>pillow</li>
+  <li>requests</li>
 </ul> 

@@ -13,39 +13,40 @@ Band Info
     <div class="left-container">
         <form id="bandUpdateForm" method="post" action="{% url 'BandBrowser:updateBandInfo' %}" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="Topleft-container">
+            <div class="Topleft-container block">
                 <div class="general-container">
                     <h2 class="general-label" >General</h2>
                     <textarea style = "display:none" name="oldBandName" placeholder="Bio" cols="30" rows="10">{{band.name}}</textarea>
-                    <input  id = "band name" class="general-Form" name="Bandname" type="text" placeholder="Band Name"}} >
-                    <script type="text/javascript">
-                        document.getElementById("band name").value = "{{band.name}}";
-                    </script>
+                    <label for="Bandname">Name</label>
+                    <input  id = "band name" class="general-Form" value="{{band.name}}" name="Bandname" type="text" placeholder="Band Name"}} >
+                    <label for="commitment">Commitment</label>
                     <select class="general-Form" name="commitment" id="commitment-Instrument">
                         <option value={{band.commitment}}>{{band.commitment}}</option>
                         <option value="Weekly">Weekly</option>
                         <option value="Whenever">Whenever</option>
                         <option value="Daily">Daily</option>
                     </select>
+                    
+                    <label for="genres">Genre</label>
                     <select class="general-Form" name="genres" id="genres-Instrument">
                         <option value={{band.genres}}>{{band.genres}}</option>
                         <option value="Rock">Rock</option>
                         <option value="Pop">Pop</option>
                         <option value="Rap">Rap</option>
                     </select>
-
-                </div>
-                <div class="info-container">
-
-                    <input id = "location" class="location" name="Location" type="text" placeholder="Location">
-                    <script type="text/javascript">
-                        document.getElementById("location").value = "{{band.location}}";
-                    </script>
-                    <textarea class="bio" name="description" id="description" placeholder="Bio" cols="30" rows="10">{{band.description}}</textarea>
+                    <div class="info-container">
+                        <label for="Location">Location</label>
+                        <input id = "location" class="location" name="Location" type="text" placeholder="Location" value="{{band.location}}">
+                        
+                        <label for="description">Description</label>
+                        <textarea class="bio" name="description" id="description" placeholder="Bio" cols="30" rows="10">{{band.description}}</textarea>
+                    </div>
                 </div>
             </div>
         </form>
-        <div class="Bottomleft-container">
+    </div>
+    <div class="right-container">
+        <div class="Bottomleft-container block">
             <h2 class="currentMembers">Current Members</h2>
             {% for member in CurrentMembers %}
                 <div class="currentMembers-Container">
@@ -68,40 +69,41 @@ Band Info
                 </div>
             {% endfor %}
         </div>
-    </div>
-    <div class="right-container">
-        <div class="currentRequests-container">
+        <div class="currentRequests-container block">
             <h2 class="currentRequests">Current Requests</h2>
             {% for member in potentialMember %}
                 <div class="currentRequest-Container">
-                    <form id="viewRequestUserPageForm{{member.username}}" method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <textarea style = "display:none" name="userToView" cols="30" rows="10">{{member.username}}</textarea>
-                        <a class = 'currentMemberLink' href="#" onclick="document.forms['viewRequestUserPageForm{{member.username}}'].submit(); return false;">{{member.username}}</a>
-                    </form>
-                    <form id="acceptUserJoinRequestForm{{member.username}}" method="post" action="{% url 'BandBrowser:acceptUserJoinRequest' %}" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <textarea style = "display:none" name="bandName" cols="30" rows="10">{{band.slug}}</textarea>
-                        <button type="submit" form="acceptUserJoinRequestForm{{member.username}}" name="userToJoin" value = {{member.username}}  class="create-post-btn">Accept</button>
-                    </form>
-                    <form id="declineUserJoinRequestForm{{member.username}}" method="post" action="{% url 'BandBrowser:declineUserJoinRequest' %}" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <textarea style = "display:none" name="bandName" cols="30" rows="10">{{band.slug}}</textarea>
-                        <button type="submit" form="declineUserJoinRequestForm{{member.username}}" name="userNotToJoin" value = {{member.username}} class="currentRequestButton" style = "border-color: black; background-color: #FF0000; color: white" onMouseOver="this.style.background='#CC0000'"
-                                onMouseOut="this.style.background='#FF0000'">Decline</button>
-                    </form>
-                    &nbsp;
+                    <div class="left">
+                        <form id="viewRequestUserPageForm{{member.username}}" method="post" action="{% url 'BandBrowser:viewUserPage' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <textarea style = "display:none" name="userToView" cols="30" rows="10">{{member.username}}</textarea>
+                            <a class = 'currentMemberLink' href="#" onclick="document.forms['viewRequestUserPageForm{{member.username}}'].submit(); return false;">{{member.username}}</a>
+                        </form>
+                    </div>
+
+                    <div class="right">
+                        <form id="declineUserJoinRequestForm{{member.username}}" method="post" action="{% url 'BandBrowser:declineUserJoinRequest' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <textarea style = "display:none" name="bandName" cols="30" rows="10">{{band.slug}}</textarea>
+                            <button type="submit" form="declineUserJoinRequestForm{{member.username}}" name="userNotToJoin" value = {{member.username}} class="currentRequestButton tertiary-button-danger">Decline</button>
+                        </form>
+                        <form id="acceptUserJoinRequestForm{{member.username}}" method="post" action="{% url 'BandBrowser:acceptUserJoinRequest' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <textarea style = "display:none" name="bandName" cols="30" rows="10">{{band.slug}}</textarea>
+                            <button type="submit" form="acceptUserJoinRequestForm{{member.username}}" name="userToJoin" value = {{member.username}}  class="create-post-btn primary-button">Accept</button>
+                        </form>
+                    </div>
+
                 </div>
             {% endfor %}
         </div>
-        &nbsp;
         <div class="buttons-container">
-            <button type="submit" form="bandUpdateForm">Save Changes</button>
             <form id="leaveBandForm" method="post" action="{% url 'BandBrowser:leaveBand' %}" enctype="multipart/form-data">
                 {% csrf_token %}
-                <button form="leaveBandForm" name="bandSlug" value ={{band.slug}} style = "border-color: black; background-color: #FF0000; color: white" onMouseOver="this.style.background='#CC0000'"
-                        onMouseOut="this.style.background='#FF0000'">Leave Band</button>
+                <button form="leaveBandForm" name="bandSlug" value ={{band.slug}} class="secondary-button-danger">Leave Band</button>
             </form>
+
+            <button type="submit" form="bandUpdateForm" class="primary-button">Save Changes</button>
         </div>
     </div>
 </div>

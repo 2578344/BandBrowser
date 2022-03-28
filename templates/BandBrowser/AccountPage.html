@@ -31,14 +31,12 @@ Account
             {%endif%}
           </div>
           {{ form.as_p }}
-          <div class="position-relative">
-          <div class=" " style="margin-left:105%;">
+
             <input name="First name" type="text" placeholder="First Name" value = {{userProfile.user.first_name}}>
             <input name="Last name" type="text" placeholder="Last Name" value = {{userProfile.user.last_name}}>
             <input type="date" name="DOB"  min="1900-01-01" max="2022-01-01" value = {{userProfile.dob|date:"Y-m-d" }}>
             <input name="Email" type="text" placeholder="Email" value = {{userProfile.user.email}}>
-          </div>
-          </div>
+
         </div>
         </div>
 

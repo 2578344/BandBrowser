@@ -20,29 +20,56 @@ def populate():
     print("===================")
 
     usersRaw = [
-        {"username":"Alex","password":"Example123?","instruments":"Banjo","Bio":"Hi","numberOfBands":0,"numberOfPostsActive":0},
-        {"username":"John","password":"Example123?","instruments":"Guitar","Bio":"Hello","numberOfBands":0,"numberOfPostsActive":0},
-        {"username":"Tom","password":"Example123?","instruments":"Drums","Bio":"Howdy","numberOfBands":0,"numberOfPostsActive":0},
-        {"username":"Ian","password":"Example123?","instruments":"Vocals","Bio":"Hello there","numberOfBands":0,"numberOfPostsActive":0},
-        {"username":"Peter","password":"Example123?","instruments":"Bass","Bio":"Hi ya","numberOfBands":0,"numberOfPostsActive":0}
+        #Interpol Members
+        {"username":"Paul","first_name":"Paul","last_name":"Banks","password":"Example123?","instruments":"Vocals","Bio":"Hi","numberOfBands":0,"numberOfPostsActive":0},
+        {"username":"Daniel","first_name":"Daniel","last_name":"Kessler","password":"Example123?","instruments":"Guitar","Bio":"Hello","numberOfBands":0,"numberOfPostsActive":0},
+        {"username":"Sam","first_name":"Sam","last_name":"Fogarino","password":"Example123?","instruments":"Drums","Bio":"Howdy","numberOfBands":0,"numberOfPostsActive":0},
+        {"username":"Carlos","first_name":"Sam","last_name":"Dengler","password":"Example123?","instruments":"Bass","Bio":"Howdy","numberOfBands":0,"numberOfPostsActive":0},
+        #Joy Division and New Order Members
+        {"username":"Ian","first_name":"Ian","last_name":"Curtis","password":"Example123?","instruments":"Vocals","Bio":"Hello there","numberOfBands":0,"numberOfPostsActive":0},
+        {"username":"Peter","first_name":"Peter","last_name":"Hook","password":"Example123?","instruments":"Bass","Bio":"Hi ya","numberOfBands":0,"numberOfPostsActive":0},
+        {"username":"Stephen","first_name":"Stephen","last_name":"Morris","password":"Example123?","instruments":"Drums","Bio":"Hi","numberOfBands":0,"numberOfPostsActive":0},
+        {"username":"Bernard","first_name":"Bernard","last_name":"Sumner","password":"Example123?","instruments":"Guitar","Bio":"Hello","numberOfBands":0,"numberOfPostsActive":0},
+        {"username":"Gillian","first_name":"Gillian","last_name":"Gilbert","password":"Example123?","instruments":"Guitar","Bio":"Howdy","numberOfBands":0,"numberOfPostsActive":0},
+        #The Joy Formidable Members
+        {"username":"Ritzy","first_name":"Rhiannon ","last_name":"Bryan","password":"Example123?","instruments":"Vocals","Bio":"Hi ya","numberOfBands":0,"numberOfPostsActive":0},
+        {"username":"Rhydian","first_name":"Rhydian","last_name":"Dafydd","password":"Example123?","instruments":"Bass","Bio":"Hello","numberOfBands":0,"numberOfPostsActive":0},
+        {"username":"Matthew","first_name":"Matthew","last_name":"Thomas","password":"Example123?","instruments":"Drums","Bio":"Hey","numberOfBands":0,"numberOfPostsActive":0},
+        #Bronski Beat Members
+        {"username":"Jimmy ","first_name":"Jimmy","last_name":"Somerville","password":"Example123?","instruments":"Vocals","Bio":"Hello There","numberOfBands":0,"numberOfPostsActive":0},
+        {"username":"Steve","first_name":"Steve","last_name":"Bronski","password":"Example123?","instruments":"Drums","Bio":"Hello","numberOfBands":0,"numberOfPostsActive":0},
+        {"username":"Larry","first_name":"Larry","last_name":"Steinbachek","password":"Example123?","instruments":"Bass","Bio":"Hi","numberOfBands":0,"numberOfPostsActive":0},
+        #Beastie Boys
+        {"username":"MikeD ","first_name":"Michael","last_name":"Diamond","password":"Example123?","instruments":"Drums","Bio":"Hey","numberOfBands":0,"numberOfPostsActive":0},
+        {"username":"MCA","first_name":"Adam","last_name":"Yauch","password":"Example123?","instruments":"Bass","Bio":"Hello","numberOfBands":0,"numberOfPostsActive":0},
+        {"username":"ADRock","first_name":"Adam","last_name":"Horovitz","password":"Example123?","instruments":"Guitar","Bio":"Hi","numberOfBands":0,"numberOfPostsActive":0}
+
+
     ]
 
     bandsRaw = [
-        {"name":"Joy Division","genres":"Post Punk","commitment":"Full Time","location":"Manchester","dateCreated":datetime.date(1976, 10, 19)},
-        {"name":"The Joy Formidable","genres":"Alternative","commitment":"When We can","location":"Wales","dateCreated":datetime.date(2007, 12, 8)},
-        {"name":"Interpol","genres":"Post Punk","commitment":"Weekly","location":"New York","dateCreated":datetime.date(1997, 5, 28)}
+        {"name":"Interpol","genres":"Rock","commitment":"Weekly","location":"New York","dateCreated":datetime.date(1997, 5, 28)},
+        {"name":"Joy Division","genres":"Rock","commitment":"Full Time","location":"Manchester","dateCreated":datetime.date(1976, 10, 19)},
+        {"name":"New Order","genres":"Pop","commitment":"Full Time","location":"Manchester","dateCreated":datetime.date(1980 , 5, 20)},
+        {"name":"The Joy Formidable","genres":"Rap","commitment":"Whenever","location":"Wales","dateCreated":datetime.date(2007, 12, 8)},
+        {"name":"Bronski Beat","genres":"Pop","commitment":"Daily","location":"Glasgow","dateCreated":datetime.date(1985, 1, 12)},
+        {"name":"Beastie Boys","genres":"Rap","commitment":"Whenever","location":"New York","dateCreated":datetime.date(1978, 10, 28)}
     ]
 
     postsRaw = [
-        {"postID":"0","description":"ASAP","title":"Looking For a bassist","publishDate":datetime.date(2022, 3, 9),"expireDate":datetime.date(2022, 3, 9)+ timedelta(days=10),"experienceRequired":"Some","genres":"Post Punk","commitment":"Full Time","location":"Manchester","Type":"Band"},
+        {"postID":"0","description":"ASAP","title":"Looking For a bassist","publishDate":datetime.date(2022, 3, 9),"expireDate":datetime.date(2022, 3, 9)+ timedelta(days=10),"experienceRequired":"Some","genres":"Rock","commitment":"Full Time","location":"Manchester","Type":"Band"},
         {"postID":"1","description":"Just Started the band","title":"Looking For a drummer","publishDate":datetime.date(2022, 3, 16),"expireDate":datetime.date(2022, 3, 16)+ timedelta(days=10),"experienceRequired":"None","genres":"Alternative","commitment":"When We can","location":"Wales","Type":"Band"},
-        {"postID":"2","description":"Guitarist seeks band","title":"Looking For Band as a guitarist","publishDate":datetime.date(2022, 3, 22),"expireDate":datetime.date(2022, 3, 22)+ timedelta(days=10),"experienceRequired":"A lot","genres":"Jazz","commitment":"Full Time","location":"Glasgow","Type":"User"}
+        {"postID":"2","description":"Guitarist seeks band","title":"Looking For Band as a guitarist","publishDate":datetime.date(2022, 3, 22),"expireDate":datetime.date(2022, 3, 22)+ timedelta(days=10),"experienceRequired":"A lot","genres":"Jazz","commitment":"Full Time","location":"Glasgow","Type":"User"},
+        {"postID":"3","description":"Rap Group looking for touring bassist","title":"Looking For Bassist","publishDate":datetime.date(2022, 3, 24),"expireDate":datetime.date(2022, 3, 22)+ timedelta(days=10),"experienceRequired":"A lot","genres":"Rap","commitment":"Full Time","location":"Manchester","Type":"Band"},
+        {"postID":"4","description":"Vocalist seeks band","title":"Looking For Band as a vocalist","publishDate":datetime.date(2022, 3, 26),"expireDate":datetime.date(2022, 3, 22)+ timedelta(days=10),"experienceRequired":"A lot","genres":"Rock","commitment":"Full Time","location":"New Yok","Type":"User"}
     ]
 
     #create User and UserProfile objects, link them together
     for user_data in usersRaw:
         if not User.objects.filter(username=user_data["username"]).exists():
             user = add_User(user_data["username"],user_data["password"])
+            user.first_name = user_data["first_name"]
+            user.last_name = user_data["last_name"]
             user.save()
             add_UserProfile(user,user_data["instruments"],user_data["Bio"],user_data["numberOfBands"],user_data["numberOfPostsActive"])
 
@@ -62,17 +89,44 @@ def populate():
 
     print("===================")
 
-    #attach posts (manually to user and band models), this adds both links to in both directions
-    attachBandToUser(bandInstances[0],userProfileInstances[3])# ian joins Joy Division
-    attachBandToUser(bandInstances[2],userProfileInstances[0])# Alex joins Interpol
-    attachBandToUser(bandInstances[1],userProfileInstances[2])# Tom joins The Joy formidable
+    #attach a user to a band, goes in both directions
+    #Interpol Members
+    attachBandToUser(bandInstances[0],userProfileInstances[0])# Paul joins Interpol
+    attachBandToUser(bandInstances[0],userProfileInstances[1])# Daniel joins Interpol
+    attachBandToUser(bandInstances[0],userProfileInstances[2])# Sam joins Interpol
+    attachBandToUser(bandInstances[0],userProfileInstances[3])# Carlos joins Interpol
+    #Joy Division Members
+    attachBandToUser(bandInstances[1],userProfileInstances[4])# Ian joins Joy Division
+    attachBandToUser(bandInstances[1],userProfileInstances[5])# Peter joins Joy Division
+    attachBandToUser(bandInstances[1],userProfileInstances[6])# Stephen joins Joy Division
+    attachBandToUser(bandInstances[1],userProfileInstances[7])# Bernard joins Joy Division
+    # New Order Members
+    attachBandToUser(bandInstances[2],userProfileInstances[5])# Peter joins New Order
+    attachBandToUser(bandInstances[2],userProfileInstances[6])# Stephen joins New Order
+    attachBandToUser(bandInstances[2],userProfileInstances[7])# Bernard joins New Order
+    attachBandToUser(bandInstances[2],userProfileInstances[8])# Gillian joins New Order
+    #The Joy Formidable Members
+    attachBandToUser(bandInstances[3],userProfileInstances[9])# Ritzy joins The Joy Formidable
+    attachBandToUser(bandInstances[3],userProfileInstances[10])# Rhydian joins The Joy Formidable
+    attachBandToUser(bandInstances[3],userProfileInstances[11])# Matthew joins The Joy Formidable
+    #Bronski Beat Members
+    attachBandToUser(bandInstances[4],userProfileInstances[12])# Jimmy joins Bronski Beat
+    attachBandToUser(bandInstances[4],userProfileInstances[13])# Steve joins Bronski Beat
+    attachBandToUser(bandInstances[4],userProfileInstances[14])# Larry joins Bronski Beat
+
+    #Beastie Boys
+    attachBandToUser(bandInstances[5],userProfileInstances[15])# MikeD joins Beastie Boys
+    attachBandToUser(bandInstances[5],userProfileInstances[16])# MCA joins Beastie Boys
+    attachBandToUser(bandInstances[5],userProfileInstances[17])# ADRock joins Beastie Boys
 
     print("===================")
 
     #attach posts (manually to user and band models)
-    attachPostToUser(postInstances[2], userProfileInstances[1])#john and guitarist seeks band
+    attachPostToUser(postInstances[2], userProfileInstances[17])#ADRock, guitarist seeks band
     attachPostToBand(postInstances[1], bandInstances[1])#The Joy Formidable looking for a drummer
-    attachPostToBand(postInstances[0], bandInstances[0])#Joy Division looking for a bassist
+    attachPostToBand(postInstances[0], bandInstances[0])#Interpol looking for a bassist
+    attachPostToBand(postInstances[3], bandInstances[3])#Joy Division looking for a bassist
+    attachPostToUser(postInstances[4], userProfileInstances[12])#Jimmy, vocalist seeks band
 
     print("===================")
     attachUserToBandAsPotentialMember(userProfileInstances[4],bandInstances[0])# peter requests to join joy division

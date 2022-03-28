@@ -10,11 +10,14 @@ Account
   <title>Project</title>
   <link rel="stylesheet" href="{% static 'Account/styles.css' %}">
 </head>
+
 <form id="userUpdateForm" method="post" action="{% url 'BandBrowser:updateUserAccount' %}" enctype="multipart/form-data">
   {% csrf_token %}
-<div class="main-container">
-    <div class="left-container">
-      <div class="Topleft-container">
+  <div class="container  ">
+    <div class="row">
+        <div class="col-lg-6 col-sm-11 border border-dark " style="background-color:#858585; margin:10px">
+
+  
         <div class="photo-container">
           <div class="photo-box">
             {%if userProfile.avatar == ""%}
@@ -28,16 +31,38 @@ Account
             {%endif%}
           </div>
           {{ form.as_p }}
+          <div class="position-relative">
+          <div class=" " style="margin-left:105%;">
+            <input name="First name" type="text" placeholder="First Name" value = {{userProfile.user.first_name}}>
+            <input name="Last name" type="text" placeholder="Last Name" value = {{userProfile.user.last_name}}>
+            <input type="date" name="DOB"  min="1900-01-01" max="2022-01-01" value = {{userProfile.dob|date:"Y-m-d" }}>
+            <input name="Email" type="text" placeholder="Email" value = {{userProfile.user.email}}>
+          </div>
+          </div>
         </div>
-        <div class="info-container">
-          <input name="First name" type="text" placeholder="First Name" value = {{userProfile.user.first_name}}>
-          <input name="Last name" type="text" placeholder="Last Name" value = {{userProfile.user.last_name}}>
-          <input type="date" name="DOB"  min="1900-01-01" max="2022-01-01" value = {{userProfile.dob|date:"Y-m-d" }}>
-          <input name="Email" type="text" placeholder="Email" value = {{userProfile.user.email}}>
         </div>
-      </div>
-      <div class="Bottomleft-container">
-        <h2 class="Social-Header">Linked Accounts</h2>
+
+        <div class="col-lg-5 col-sm-11 border border-dark " style="background-color:#858585; margin:10px">
+        <div class="instruments-container" style="border-width: 0; background-color: #858585;">
+            <select class="instruments-Form" name="Main-Instrument" id="Main-Instrument">
+              <option value={{userProfile.instruments}}>{{userProfile.instruments}}</option>
+              <option value="0">Main Instrument</option>
+              <option value="Drums">Drums</option>
+              <option value="Bass">Bass</option>
+              <option value="Vocals">Vocals</option>
+              <option value="Guitar">Guitar</option>
+              <option value="Banjo">Banjo</option>
+              <option value="Other">Other</option>
+            </select>
+    
+    
+            <textarea class="bio" name="Bio" id="Bio" placeholder="Bio" cols="30" rows="10">{{userProfile.bio}}</textarea>
+          </div>
+        </div>
+
+        
+        <div class="col-lg-6 col-sm-11 border border-dark " style="background-color:#858585; margin:10px"> 
+          <h2 class="Social-Header">Linked Accounts</h2>
         <div class="Social-Container">
           <input class="Social-form" name="Spotify" type="text" placeholder="Spotify">
           <button type="button" id="SpotifyChange">Change</button>
@@ -50,24 +75,15 @@ Account
           <input class="Social-form" name="Facebook" type="text" placeholder="Facebook">
           <button type="button" id="FacebookChange">Change</button>
         </div>
-      </div>
-    </div>
-    <div class="right-container">
-      <div class="instruments-container">
-        <select class="instruments-Form" name="Main-Instrument" id="Main-Instrument">
-          <option value={{userProfile.instruments}}>{{userProfile.instruments}}</option>
-          <option value="0">Main Instrument</option>
-          <option value="Drums">Drums</option>
-          <option value="Bass">Bass</option>
-          <option value="Vocals">Vocals</option>
-          <option value="Guitar">Guitar</option>
-          <option value="Banjo">Banjo</option>
-          <option value="Other">Other</option>
-        </select>
+        </div>
 
 
-        <textarea class="bio" name="Bio" id="Bio" placeholder="Bio" cols="30" rows="10">{{userProfile.bio}}</textarea>
-      </div>
+
+
+
+
+
+        <div class="col-lg-5 col-sm-11 border border-dark " style="border: hidden !important; margin:10px"> 
       <div class="buttons-container">
         <a href="{% url 'BandBrowser:deleteUserAccount' %}">
           <button type="button" id="deleteButton" style = "border-color: black; background-color: #FF0000; color: white" onMouseOver="this.style.background='#CC0000'"
@@ -76,7 +92,10 @@ Account
             &nbsp;
         <button method="post" id="SaveChanges">Save Changes</button>
       </div>
+        </div>
+
+
     </div>
-</div>
+  </div>
 </form>
 {% endblock %}
